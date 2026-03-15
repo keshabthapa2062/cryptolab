@@ -1,0 +1,2651 @@
+<!doctype html>
+<html lang="en" class="h-full" data-theme="dark">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CRYPTO LAB</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&amp;family=Rajdhani:wght@300;400;500;600;700&amp;family=Share+Tech+Mono&amp;display=swap"
+    rel="stylesheet">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            orbitron: ['Orbitron', 'sans-serif'],
+            rajdhani: ['Rajdhani', 'sans-serif'],
+            mono: ['Share Tech Mono', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    :root {
+      --neon-cyan: #00f0ff;
+      --neon-magenta: #ff00e5;
+      --neon-primary: #00f0ff;
+      --neon-secondary: #ff00e5;
+      --neon-green: #39ff14;
+      --neon-orange: #ff6600;
+      --neon-red: #ff0044;
+      --bg-dark: #0a0a1a;
+      --bg-dark-card: #111128;
+      --bg-light: #e8eaf0;
+      --bg-light-card: #f5f6fa;
+      --text-dark: #e0e0f0;
+      --text-light: #1a1a2e;
+    }
+
+
+    html,
+    body {
+      height: 100%;
+      margin: 0;
+    }
+
+    body {
+      overflow-x: hidden;
+    }
+
+    [data-theme="dark"] body {
+      background: var(--bg-dark);
+      color: var(--text-dark);
+    }
+
+    [data-theme="light"] body {
+      background: var(--bg-light);
+      color: var(--text-light);
+    }
+
+    [data-theme="dark"] .theme-bg {
+      background: var(--bg-dark);
+    }
+
+    [data-theme="light"] .theme-bg {
+      background: var(--bg-light);
+    }
+
+    [data-theme="dark"] .theme-card {
+      background: var(--bg-dark-card);
+      border: 1px solid rgba(0, 240, 255, 0.15);
+    }
+
+    [data-theme="light"] .theme-card {
+      background: var(--bg-light-card);
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+    }
+
+    [data-theme="dark"] .theme-input {
+      background: rgba(0, 240, 255, 0.05);
+      border: 1px solid rgba(0, 240, 255, 0.2);
+      color: #e0e0f0;
+    }
+
+    [data-theme="light"] .theme-input {
+      background: #fff;
+      border: 1px solid #ccc;
+      color: #1a1a2e;
+    }
+
+    [data-theme="dark"] .theme-text {
+      color: var(--text-dark);
+    }
+
+    [data-theme="light"] .theme-text {
+      color: var(--text-light);
+    }
+
+    [data-theme="dark"] .theme-muted {
+      color: rgba(224, 224, 240, 0.6);
+    }
+
+    [data-theme="light"] .theme-muted {
+      color: rgba(26, 26, 46, 0.6);
+    }
+
+    .neon-glow {
+      text-shadow: 0 0 10px var(--neon-primary), 0 0 30px var(--neon-primary), 0 0 60px var(--neon-primary);
+    }
+
+    [data-theme="light"] .neon-glow {
+      text-shadow: 0 0 5px rgba(0, 150, 200, 0.3);
+      color: #007a99;
+    }
+
+    .neon-border {
+      box-shadow: 0 0 10px rgba(0, 240, 255, 0.3), inset 0 0 10px rgba(0, 240, 255, 0.05);
+    }
+
+    [data-theme="light"] .neon-border {
+      box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+    }
+
+    .btn-neon {
+      background: linear-gradient(135deg, rgba(0, 240, 255, 0.15), rgba(255, 0, 229, 0.15));
+      border: 1px solid var(--neon-primary);
+      color: var(--neon-primary);
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-neon:hover {
+      background: linear-gradient(135deg, rgba(0, 240, 255, 0.3), rgba(255, 0, 229, 0.3));
+      box-shadow: 0 0 25px rgba(0, 240, 255, 0.4);
+      transform: translateY(-2px);
+    }
+
+    [data-theme="light"] .btn-neon {
+      background: linear-gradient(135deg, #007a99, #9900cc);
+      border: none;
+      color: #fff;
+    }
+
+    [data-theme="light"] .btn-neon:hover {
+      box-shadow: 0 4px 20px rgba(0, 122, 153, 0.3);
+    }
+
+    .btn-action {
+      background: linear-gradient(135deg, #00f0ff, #ff00e5);
+      color: #0a0a1a;
+      font-weight: 700;
+      transition: all 0.3s;
+    }
+
+    .btn-action:hover {
+      box-shadow: 0 0 30px rgba(0, 240, 255, 0.5);
+      transform: translateY(-2px);
+    }
+
+    .typing-cursor {
+      border-right: 3px solid var(--neon-primary);
+      animation: blink 0.7s infinite;
+    }
+
+    @keyframes blink {
+
+      0%,
+      100% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: 0;
+      }
+    }
+
+    @keyframes float {
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-10px);
+      }
+    }
+
+    .float-anim {
+      animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes pulse-neon {
+
+      0%,
+      100% {
+        opacity: 0.5;
+      }
+
+      50% {
+        opacity: 1;
+      }
+    }
+
+    .pulse-neon {
+      animation: pulse-neon 2s ease-in-out infinite;
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .slide-up {
+      animation: slideUp 0.6s ease-out forwards;
+    }
+
+    @keyframes scaleIn {
+      from {
+        opacity: 0;
+        transform: scale(0.95);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .scale-in {
+      animation: scaleIn 0.4s ease-out forwards;
+    }
+
+    @keyframes expandKey {
+      from {
+        opacity: 0;
+        max-height: 0;
+      }
+
+      to {
+        opacity: 1;
+        max-height: 500px;
+      }
+    }
+
+    @keyframes collapseKey {
+      from {
+        opacity: 1;
+        max-height: 500px;
+      }
+
+      to {
+        opacity: 0;
+        max-height: 0;
+      }
+    }
+
+    .expand-key {
+      animation: expandKey 0.4s ease-out forwards;
+    }
+
+    .collapse-key {
+      animation: collapseKey 0.4s ease-out forwards;
+    }
+
+    .cyber-grid {
+      background-image: linear-gradient(rgba(0, 240, 255, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 240, 255, 0.03) 1px, transparent 1px);
+      background-size: 50px 50px;
+    }
+
+    [data-theme="light"] .cyber-grid {
+      background-image: linear-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+    }
+
+    .security-low {
+      color: var(--neon-red);
+    }
+
+    .security-medium {
+      color: var(--neon-orange);
+    }
+
+    .security-high {
+      color: var(--neon-green);
+    }
+
+    .algo-check {
+      display: none;
+    }
+
+    .algo-check:checked+.algo-label {
+      border-color: var(--neon-primary);
+      background: rgba(0, 240, 255, 0.15);
+      box-shadow: 0 0 15px rgba(0, 240, 255, 0.3);
+    }
+
+    [data-theme="light"] .algo-check:checked+.algo-label {
+      border-color: #007a99;
+      background: rgba(0, 122, 153, 0.15);
+      box-shadow: 0 0 15px rgba(0, 122, 153, 0.3);
+    }
+
+    .algo-label {
+      cursor: pointer;
+      border: 1px solid rgba(0, 240, 255, 0.2);
+      padding: 15px 16px;
+      border-radius: 8px;
+      transition: all 0.3s;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    [data-theme="light"] .algo-label {
+      border-color: #ccc;
+    }
+
+    .algo-label:hover {
+      border-color: var(--neon-primary);
+      background: rgba(0, 240, 255, 0.05);
+    }
+
+    [data-theme="light"] .algo-label:hover {
+      border-color: #007a99;
+    }
+
+    /* Custom Checkbox styling */
+    .algo-check:checked+.algo-label input[type="checkbox"] {
+      background: var(--neon-primary);
+      border-color: var(--neon-primary);
+    }
+
+    .algo-check:checked+.algo-label input[type="checkbox"]::after {
+      content: '✓';
+      color: #0a0a1a;
+      font-weight: bold;
+      font-size: 14px;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .algo-label input[type="checkbox"] {
+      cursor: pointer;
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+      transition: all 0.3s;
+      border: 2px solid var(--neon-primary);
+      background: transparent;
+      appearance: none;
+      -webkit-appearance: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 4px;
+      position: relative;
+    }
+
+    /* Custom Radio styling */
+    .algo-check:checked+.algo-label input[type="radio"] {
+      background: var(--neon-primary);
+      border-color: var(--neon-primary);
+    }
+
+    .algo-check:checked+.algo-label input[type="radio"]::after {
+      content: '●';
+      color: #0a0a1a;
+      font-weight: bold;
+      font-size: 12px;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .algo-label input[type="radio"] {
+      cursor: pointer;
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+      transition: all 0.3s;
+      border: 2px solid var(--neon-primary);
+      background: transparent;
+      appearance: none;
+      -webkit-appearance: none;
+      border-radius: 50%;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    [data-theme="light"] .algo-label input[type="checkbox"],
+    [data-theme="light"] .algo-label input[type="radio"] {
+      border-color: #007a99;
+    }
+
+    [data-theme="light"] .algo-check:checked+.algo-label input[type="checkbox"],
+    [data-theme="light"] .algo-check:checked+.algo-label input[type="radio"] {
+      background: #007a99;
+      border-color: #007a99;
+    }
+
+    [data-theme="light"] .algo-check:checked+.algo-label input[type="checkbox"]::after,
+    [data-theme="light"] .algo-check:checked+.algo-label input[type="radio"]::after {
+      color: #fff;
+    }
+
+    table {
+      border-collapse: separate;
+      border-spacing: 0;
+    }
+
+    th {
+      background: rgba(0, 240, 255, 0.1);
+    }
+
+    [data-theme="light"] th {
+      background: rgba(0, 122, 153, 0.08);
+    }
+
+    td,
+    th {
+      border: 1px solid rgba(0, 240, 255, 0.1);
+    }
+
+    [data-theme="light"] td,
+    [data-theme="light"] th {
+      border-color: rgba(0, 0, 0, 0.08);
+    }
+
+    .tab-btn {
+      transition: all 0.3s;
+    }
+
+    .tab-btn.active {
+      background: linear-gradient(135deg, rgba(0, 240, 255, 0.2), rgba(255, 0, 229, 0.2));
+      border-color: var(--neon-primary);
+    }
+
+    [data-theme="light"] .tab-btn.active {
+      background: linear-gradient(135deg, rgba(0, 122, 153, 0.15), rgba(153, 0, 204, 0.15));
+      border-color: #007a99;
+    }
+
+    .toast-container {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .toast {
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 600;
+      animation: slideIn 0.3s ease-out;
+      max-width: 350px;
+    }
+
+    .toast-success {
+      background: rgba(57, 255, 20, 0.15);
+      border: 1px solid var(--neon-green);
+      color: var(--neon-green);
+    }
+
+    .toast-error {
+      background: rgba(255, 0, 68, 0.15);
+      border: 1px solid var(--neon-red);
+      color: var(--neon-red);
+    }
+
+    [data-theme="light"] .toast-success {
+      background: #e6ffe6;
+      border-color: #00aa00;
+      color: #006600;
+    }
+
+    [data-theme="light"] .toast-error {
+      background: #ffe6ec;
+      border-color: #cc0033;
+      color: #990022;
+    }
+
+    @keyframes slideIn {
+      from {
+        transform: translateX(100%);
+        opacity: 0;
+      }
+
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+
+    .hex-particle {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      background: var(--neon-primary);
+      opacity: 0.3;
+      border-radius: 50%;
+      animation: particleFloat 8s linear infinite;
+    }
+
+    .neon-line {
+      width: 80%;
+      height: 2px;
+      margin: 30px auto;
+      border: none;
+
+      background: linear-gradient(90deg,
+          transparent,
+          #00f0ff,
+          #4f8cff,
+          #ff00e5,
+          transparent);
+
+      background-size: 200% auto;
+      animation: neonMove 4s linear infinite;
+
+      box-shadow:
+        0 0 8px #00f0ff,
+        0 0 16px #ff00e5;
+    }
+
+    @keyframes neonMove {
+      from {
+        background-position: 0%
+      }
+
+      to {
+        background-position: 200%
+      }
+    }
+
+    @keyframes particleFloat {
+      0% {
+        transform: translateY(0) translateX(0);
+        opacity: 0.3;
+      }
+
+      50% {
+        opacity: 0.6;
+      }
+
+      100% {
+        transform: translateY(-100%) translateX(30px);
+        opacity: 0;
+      }
+    }
+
+    [data-theme="light"] .hex-particle {
+      background: #007a99;
+      opacity: 0.15;
+    }
+
+    .scroll-reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.6s ease-out;
+    }
+
+    .scroll-reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: rgba(0, 0, 0, 0.2);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: rgba(0, 240, 255, 0.3);
+      border-radius: 4px;
+    }
+
+    [data-theme="light"] ::-webkit-scrollbar-track {
+      background: #e0e0e0;
+    }
+
+    [data-theme="light"] ::-webkit-scrollbar-thumb {
+      background: #007a99;
+    }
+
+    /* Remove number input arrows */
+    input[type="number"]::-webkit-outer-spin-button,
+    input[type="number"]::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    .theme-input:focus {
+      outline: none;
+      border-color: var(--neon-primary);
+      box-shadow: 0 0 8px rgba(0, 240, 255, 0.4);
+    }
+
+    /* Light mode version */
+
+    [data-theme="light"] .theme-input:focus {
+      border-color: #007a99;
+      box-shadow: 0 0 8px rgba(0, 122, 153, 0.4);
+    }
+  </style>
+  <style>
+    body {
+      box-sizing: border-box;
+    }
+  </style>
+</head>
+
+<body class="h-full font-rajdhani theme-bg">
+  <div id="app-wrapper" class="h-full w-full overflow-auto"><!-- Toast Container -->
+    <div id="toast-container" class="toast-container"></div><!-- LANDING PAGE -->
+    <div id="landing-page" class="w-full min-h-full relative cyber-grid"><!-- Particles -->
+      <div id="particles" class="absolute inset-0 pointer-events-none overflow-hidden"></div><!-- Nav -->
+      <header class="relative z-10">
+        <nav class="flex items-center justify-between px-6 py-4 max-w-7xl mx-auto">
+          <div class="flex items-center gap-2"><i data-lucide="shield" class="w-8 h-8"
+              style="color: var(--neon-primary)"></i> <span id="nav-title"
+              class="font-orbitron font-bold text-xl neon-glow">CRYPTO LAB</span>
+          </div>
+          <div class="flex items-center gap-4"><button id="theme-toggle" class="p-2 rounded-lg theme-card"
+              aria-label="Toggle theme"> <i data-lucide="moon" id="theme-icon-dark" class="w-5 h-5"
+                style="color: var(--neon-primary)"></i> <i data-lucide="sun" id="theme-icon-light"
+                class="w-5 h-5 hidden" style="color: #ff9900"></i> </button> <button onclick="showDashboard()"
+              class="btn-neon px-4 py-2 rounded-lg font-orbitron text-sm">Dashboard</button>
+          </div>
+        </nav>
+      </header><!-- Hero -->
+      <main class="relative z-10 flex flex-col items-center justify-center px-6 py-20 md:py-32">
+        <div class="text-center max-w-4xl mx-auto slide-up">
+          <div class="mb-4 flex items-center justify-center gap-3">
+            <div class="w-16 h-[2px] bg-gradient-to-r from-transparent to-cyan-400"></div><span
+              class="font-mono text-sm tracking-widest" style="color: var(--neon-primary)">// SECURE · ENCRYPT ·
+              PROTECT</span>
+            <div class="w-16 h-[2px] bg-gradient-to-l from-transparent to-cyan-400"></div>
+          </div>
+          <h1 id="hero-title" class="font-orbitron text-5xl md:text-7xl lg:text-8xl font-black mb-6 neon-glow">CRYPTO
+            LAB</h1>
+          <div class="h-12 md:h-14 flex items-center justify-center mb-10"><span id="typing-text"
+              class="font-mono text-lg md:text-2xl typing-cursor pr-1" style="color: var(--neon-secondary)"></span>
+          </div><button id="hero-btn" onclick="showDashboard()"
+            class="btn-action px-10 py-4 rounded-xl font-orbitron text-lg tracking-wider float-anim"> <span
+              class="flex items-center gap-3"> <i data-lucide="zap" class="w-6 h-6"></i> <span id="hero-btn-text">Let's
+                Get Started</span> <i data-lucide="arrow-right" class="w-6 h-6"></i> </span> </button>
+        </div><!-- Stats -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-20 max-w-4xl w-full">
+          <div class="theme-card rounded-xl p-4 text-center neon-border scroll-reveal">
+            <div class="font-orbitron text-2xl font-bold" style="color: var(--neon-primary)">
+              9+
+            </div>
+            <div class="text-sm theme-muted">
+              Algorithms
+            </div>
+          </div>
+          <div class="theme-card rounded-xl p-4 text-center neon-border scroll-reveal">
+            <div class="font-orbitron text-2xl font-bold" style="color: var(--neon-secondary)">
+              256
+            </div>
+            <div class="text-sm theme-muted">
+              Bit Encryption
+            </div>
+          </div>
+          <div class="theme-card rounded-xl p-4 text-center neon-border scroll-reveal">
+            <div class="font-orbitron text-2xl font-bold" style="color: var(--neon-green)">
+              100%
+            </div>
+            <div class="text-sm theme-muted">
+              Client-Side
+            </div>
+          </div>
+          <div class="theme-card rounded-xl p-4 text-center neon-border scroll-reveal">
+            <div class="font-orbitron text-2xl font-bold" style="color: var(--neon-orange)">
+              ∞
+            </div>
+            <div class="text-sm theme-muted">
+              Operations
+            </div>
+          </div>
+        </div>
+      </main><!-- About Section -->
+      <section class="relative z-10 px-6 py-16 max-w-6xl mx-auto">
+        <h2 class="font-orbitron text-3xl md:text-4xl font-bold text-center mb-12 neon-glow scroll-reveal">About The
+          Platform</h2>
+        <div class="grid md:grid-cols-2 gap-8">
+          <div class="theme-card rounded-2xl p-8 neon-border scroll-reveal">
+            <div class="flex items-center gap-3 mb-4"><i data-lucide="lock" class="w-8 h-8"
+                style="color: var(--neon-primary)"></i>
+              <h3 class="font-orbitron text-xl font-bold">What is Encryption?</h3>
+            </div>
+            <p class="theme-muted leading-relaxed">Encryption converts readable data (plaintext) into an unreadable
+              format (ciphertext) using mathematical algorithms and keys. Only authorized parties with the correct key
+              can decrypt and access the original information. It's the backbone of modern digital security.</p>
+          </div>
+          <div class="theme-card rounded-2xl p-8 neon-border scroll-reveal">
+            <div class="flex items-center gap-3 mb-4"><i data-lucide="unlock" class="w-8 h-8"
+                style="color: var(--neon-secondary)"></i>
+              <h3 class="font-orbitron text-xl font-bold">What is Decryption?</h3>
+            </div>
+            <p class="theme-muted leading-relaxed">Decryption is the reverse process — converting ciphertext back to its
+              original plaintext form using the correct decryption key and algorithm. Together with encryption, it
+              ensures secure communication across untrusted networks.</p>
+          </div>
+        </div>
+      </section><!-- Features Section -->
+      <section class="relative z-10 px-6 py-16 max-w-6xl mx-auto">
+        <h2 class="font-orbitron text-3xl md:text-4xl font-bold text-center mb-12 neon-glow scroll-reveal">Features</h2>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div class="theme-card rounded-2xl p-6 neon-border scroll-reveal"><i data-lucide="cpu" class="w-10 h-10 mb-4"
+              style="color: var(--neon-primary)"></i>
+            <h3 class="font-orbitron text-lg font-bold mb-2">9+ Algorithms</h3>
+            <p class="theme-muted text-sm">Caesar, Substitution, Hill, DES, Blowfish, AES, RSA, Diffie-Hellman, and
+              SHA-1.</p>
+          </div>
+          <div class="theme-card rounded-2xl p-6 neon-border scroll-reveal"><i data-lucide="shield-check"
+              class="w-10 h-10 mb-4" style="color: var(--neon-green)"></i>
+            <h3 class="font-orbitron text-lg font-bold mb-2">Real Crypto</h3>
+            <p class="theme-muted text-sm">Actual cryptographic implementations, not simplified demos. Production-grade
+              algorithms.</p>
+          </div>
+          <div class="theme-card rounded-2xl p-6 neon-border scroll-reveal"><i data-lucide="monitor"
+              class="w-10 h-10 mb-4" style="color: var(--neon-secondary)"></i>
+            <h3 class="font-orbitron text-lg font-bold mb-2">Client-Side</h3>
+            <p class="theme-muted text-sm">All processing happens locally in your browser. No data ever leaves your
+              device.</p>
+          </div>
+          <div class="theme-card rounded-2xl p-6 neon-border scroll-reveal"><i data-lucide="moon" class="w-10 h-10 mb-4"
+              style="color: var(--neon-orange)"></i>
+            <h3 class="font-orbitron text-lg font-bold mb-2">Dark/Light Mode</h3>
+            <p class="theme-muted text-sm">Switch between stunning neon dark mode and clean light mode for any
+              environment.</p>
+          </div>
+          <div class="theme-card rounded-2xl p-6 neon-border scroll-reveal"><i data-lucide="history"
+              class="w-10 h-10 mb-4" style="color: var(--neon-red)"></i>
+            <h3 class="font-orbitron text-lg font-bold mb-2">History Log</h3>
+            <p class="theme-muted text-sm">All operations stored locally with timestamps. Review, analyze, or delete
+              past results.</p>
+          </div>
+          <div class="theme-card rounded-2xl p-6 neon-border scroll-reveal"><i data-lucide="smartphone"
+              class="w-10 h-10 mb-4" style="color: var(--neon-primary)"></i>
+            <h3 class="font-orbitron text-lg font-bold mb-2">Fully Responsive</h3>
+            <p class="theme-muted text-sm">Optimized for mobile, tablet, and desktop with fluid layouts and
+              touch-friendly controls.</p>
+          </div>
+        </div>
+      </section><!-- Education Section -->
+      <section class="relative z-10 px-6 py-16 max-w-6xl mx-auto">
+        <h2 class="font-orbitron text-3xl md:text-4xl font-bold text-center mb-12 neon-glow scroll-reveal">Algorithm
+          Guide</h2>
+        <div class="space-y-4" id="edu-accordion">
+          <div class="theme-card rounded-xl neon-border overflow-hidden scroll-reveal"><button
+              class="w-full text-left p-5 flex items-center justify-between font-orbitron font-bold"
+              onclick="toggleAccordion(this)"> <span class="flex items-center gap-3"><i data-lucide="key"
+                  class="w-5 h-5" style="color:var(--neon-primary)"></i> Caesar Cipher</span> <i
+                data-lucide="chevron-down" class="w-5 h-5 transition-transform"></i> </button>
+            <div class="hidden px-5 pb-5 theme-muted text-sm leading-relaxed">
+              Shifts each letter by a fixed number (1-25). Example: Shift 3 → A→D, B→E. One of the oldest ciphers, used
+              by Julius Caesar. <span class="security-low font-bold">Low Security</span> — easily broken by frequency
+              analysis.
+            </div>
+          </div>
+          <div class="theme-card rounded-xl neon-border overflow-hidden scroll-reveal"><button
+              class="w-full text-left p-5 flex items-center justify-between font-orbitron font-bold"
+              onclick="toggleAccordion(this)"> <span class="flex items-center gap-3"><i data-lucide="shuffle"
+                  class="w-5 h-5" style="color:var(--neon-primary)"></i> Substitution Cipher</span> <i
+                data-lucide="chevron-down" class="w-5 h-5 transition-transform"></i> </button>
+            <div class="hidden px-5 pb-5 theme-muted text-sm leading-relaxed">
+              Maps each letter to a unique replacement letter using a 26-character key. Example: Key
+              "QWERTYUIOPASDFGHJKLZXCVBNM" maps A→Q, B→W. <span class="security-low font-bold">Low Security</span> —
+              vulnerable to frequency analysis.
+            </div>
+          </div>
+          <div class="theme-card rounded-xl neon-border overflow-hidden scroll-reveal"><button
+              class="w-full text-left p-5 flex items-center justify-between font-orbitron font-bold"
+              onclick="toggleAccordion(this)"> <span class="flex items-center gap-3"><i data-lucide="grid-3x3"
+                  class="w-5 h-5" style="color:var(--neon-primary)"></i> Hill Cipher</span> <i
+                data-lucide="chevron-down" class="w-5 h-5 transition-transform"></i> </button>
+            <div class="hidden px-5 pb-5 theme-muted text-sm leading-relaxed">
+              Uses matrix multiplication over mod 26. A 2×2 key matrix encrypts letter pairs. Example: Key "GYBNQKURP"
+              (3×3 matrix). Requires an invertible matrix. <span class="security-medium font-bold">Medium
+                Security</span> — stronger than simple substitution but breakable with known-plaintext attacks.
+            </div>
+          </div>
+          <div class="theme-card rounded-xl neon-border overflow-hidden scroll-reveal"><button
+              class="w-full text-left p-5 flex items-center justify-between font-orbitron font-bold"
+              onclick="toggleAccordion(this)"> <span class="flex items-center gap-3"><i data-lucide="hard-drive"
+                  class="w-5 h-5" style="color:var(--neon-orange)"></i> DES</span> <i data-lucide="chevron-down"
+                class="w-5 h-5 transition-transform"></i> </button>
+            <div class="hidden px-5 pb-5 theme-muted text-sm leading-relaxed">
+              Data Encryption Standard — 56-bit key, 16-round Feistel network processing 64-bit blocks. Historically
+              important but now considered insecure. <span class="security-medium font-bold">Medium Security</span> —
+              deprecated due to small key size, brute-forceable.
+            </div>
+          </div>
+          <div class="theme-card rounded-xl neon-border overflow-hidden scroll-reveal"><button
+              class="w-full text-left p-5 flex items-center justify-between font-orbitron font-bold"
+              onclick="toggleAccordion(this)"> <span class="flex items-center gap-3"><i data-lucide="fish"
+                  class="w-5 h-5" style="color:var(--neon-orange)"></i> Blowfish</span> <i data-lucide="chevron-down"
+                class="w-5 h-5 transition-transform"></i> </button>
+            <div class="hidden px-5 pb-5 theme-muted text-sm leading-relaxed">
+              Symmetric block cipher with variable key length (4-56 bytes). 16-round Feistel structure with
+              key-dependent S-boxes. Fast and free to use. <span class="security-medium font-bold">Medium
+                Security</span> — good for most applications, 64-bit block size is the main limitation.
+            </div>
+          </div>
+          <div class="theme-card rounded-xl neon-border overflow-hidden scroll-reveal"><button
+              class="w-full text-left p-5 flex items-center justify-between font-orbitron font-bold"
+              onclick="toggleAccordion(this)"> <span class="flex items-center gap-3"><i data-lucide="shield"
+                  class="w-5 h-5" style="color:var(--neon-green)"></i> AES (Rijndael)</span> <i
+                data-lucide="chevron-down" class="w-5 h-5 transition-transform"></i> </button>
+            <div class="hidden px-5 pb-5 theme-muted text-sm leading-relaxed">
+              Advanced Encryption Standard — 128/192/256-bit keys with substitution-permutation network. The gold
+              standard for symmetric encryption, used worldwide. <span class="security-high font-bold">High
+                Security</span> — no practical attacks known. Used by governments and military.
+            </div>
+          </div>
+          <div class="theme-card rounded-xl neon-border overflow-hidden scroll-reveal"><button
+              class="w-full text-left p-5 flex items-center justify-between font-orbitron font-bold"
+              onclick="toggleAccordion(this)"> <span class="flex items-center gap-3"><i data-lucide="key"
+                  class="w-5 h-5" style="color:var(--neon-green)"></i> RSA</span> <i data-lucide="chevron-down"
+                class="w-5 h-5 transition-transform"></i> </button>
+            <div class="hidden px-5 pb-5 theme-muted text-sm leading-relaxed">
+              Asymmetric algorithm based on the difficulty of factoring large primes. Uses public/private key pairs. Key
+              sizes: 1024-4096 bits. <span class="security-high font-bold">High Security</span> — foundation of modern
+              internet security (SSL/TLS, digital signatures).
+            </div>
+          </div>
+          <div class="theme-card rounded-xl neon-border overflow-hidden scroll-reveal"><button
+              class="w-full text-left p-5 flex items-center justify-between font-orbitron font-bold"
+              onclick="toggleAccordion(this)"> <span class="flex items-center gap-3"><i data-lucide="repeat"
+                  class="w-5 h-5" style="color:var(--neon-green)"></i> Diffie-Hellman</span> <i
+                data-lucide="chevron-down" class="w-5 h-5 transition-transform"></i> </button>
+            <div class="hidden px-5 pb-5 theme-muted text-sm leading-relaxed">
+              Key exchange protocol — two parties generate a shared secret over an insecure channel without directly
+              transmitting it. Based on discrete logarithm problem. <span class="security-high font-bold">High
+                Security</span> — enables secure key exchange. Fundamental to TLS/SSL.
+            </div>
+          </div>
+          <div class="theme-card rounded-xl neon-border overflow-hidden scroll-reveal"><button
+              class="w-full text-left p-5 flex items-center justify-between font-orbitron font-bold"
+              onclick="toggleAccordion(this)"> <span class="flex items-center gap-3"><i data-lucide="hash"
+                  class="w-5 h-5" style="color:var(--neon-orange)"></i> SHA-1</span> <i data-lucide="chevron-down"
+                class="w-5 h-5 transition-transform"></i> </button>
+            <div class="hidden px-5 pb-5 theme-muted text-sm leading-relaxed">
+              Cryptographic hash function producing a 160-bit (40 hex) digest. One-way function — cannot be decrypted.
+              Used for integrity verification and digital signatures. <span class="security-medium font-bold">Medium
+                Security</span> — collision attacks found; deprecated for new applications. Use SHA-256+.
+            </div>
+          </div>
+        </div>
+      </section><!-- Footer -->
+      <footer class="text-center py-8 px-4" style="color:var(--text-secondary);font-size:14px;">
+        <div class="flex items-center justify-center gap-2 mb-2"><i data-lucide="shield" class="w-5 h-5"
+            style="color: var(--neon-primary)"></i> <span id="footer-brand"
+            class="font-orbitron font-bold neon-glow">CRYPTO LAB</span>
+        </div><br>
+        <hr class="neon-line mb-6" style="max-width:600px;margin:0 auto 24px;">
+        <p id="footer-credit" class="theme-muted text-sm">Designed and Developed by Keshab and Team.</p>
+      </footer>
+    </div><!-- DASHBOARD PAGE -->
+    <div id="dashboard-page" class="w-full min-h-full relative cyber-grid hidden">
+      <div id="particles2" class="absolute inset-0 pointer-events-none overflow-hidden"></div><!-- Dashboard Nav -->
+      <header class="relative z-10">
+        <nav class="flex items-center justify-between px-6 py-4 max-w-7xl mx-auto">
+          <div class="flex items-center gap-2 cursor-pointer" onclick="showLanding()"><i data-lucide="shield"
+              class="w-8 h-8" style="color: var(--neon-primary)"></i> <span
+              class="font-orbitron font-bold text-xl neon-glow">CRYPTO LAB</span>
+          </div>
+          <div class="flex items-center gap-3"><button onclick="showHistoryPage()" class="p-2 rounded-lg theme-card"
+              aria-label="History"> <i data-lucide="history" class="w-5 h-5" style="color: var(--neon-primary)"></i>
+            </button> <button id="theme-toggle-2" class="p-2 rounded-lg theme-card" aria-label="Toggle theme"> <i
+                data-lucide="moon" id="theme-icon-dark-2" class="w-5 h-5" style="color: var(--neon-primary)"></i> <i
+                data-lucide="sun" id="theme-icon-light-2" class="w-5 h-5 hidden" style="color: #ff9900"></i> </button>
+            <button onclick="showLanding()" class="btn-neon px-4 py-2 rounded-lg font-orbitron text-sm">Home</button>
+          </div>
+        </nav>
+      </header>
+      <main class="relative z-10 px-4 md:px-6 py-8 max-w-6xl mx-auto"><!-- Dashboard Heading -->
+        <div class="text-center mb-10 slide-up">
+          <h1 class="font-orbitron text-3xl md:text-5xl font-bold neon-glow mb-4">What's on your mind?</h1>
+          <p class="theme-muted text-lg">Choose your operation below</p>
+        </div><!-- Mode Buttons -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-10 max-w-3xl mx-auto"><button onclick="setMode('encrypt')"
+            id="mode-encrypt" class="tab-btn theme-card rounded-xl p-6 text-center neon-border"> <i data-lucide="lock"
+              class="w-10 h-10 mx-auto mb-3" style="color: var(--neon-primary)"></i>
+            <div class="font-orbitron font-bold text-lg">
+              Encryption
+            </div>
+            <div class="theme-muted text-sm">
+              Plaintext → Ciphertext
+            </div>
+          </button> <button onclick="setMode('decrypt')" id="mode-decrypt"
+            class="tab-btn theme-card rounded-xl p-6 text-center neon-border"> <i data-lucide="unlock"
+              class="w-10 h-10 mx-auto mb-3" style="color: var(--neon-secondary)"></i>
+            <div class="font-orbitron font-bold text-lg">
+              Decryption
+            </div>
+            <div class="theme-muted text-sm">
+              Ciphertext → Plaintext
+            </div>
+          </button> <button onclick="setMode('both')" id="mode-both"
+            class="tab-btn theme-card rounded-xl p-6 text-center neon-border"> <i data-lucide="repeat"
+              class="w-10 h-10 mx-auto mb-3" style="color: var(--neon-green)"></i>
+            <div class="font-orbitron font-bold text-lg">
+              Both
+            </div>
+            <div class="theme-muted text-sm">
+              Encrypt &amp; Decrypt
+            </div>
+          </button>
+        </div><!-- Info Section -->
+        <div id="info-section" class="mb-10 slide-up">
+          <div class="grid md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+            <!-- Encryption Info -->
+            <div class="theme-card rounded-2xl p-6 neon-border">
+              <h3 class="font-orbitron text-xl font-bold mb-4 flex items-center gap-3"
+                style="color: var(--neon-primary)"><i data-lucide="lock" class="w-6 h-6"></i> What is Encryption?</h3>
+              <p class="theme-muted text-sm leading-relaxed mb-4">Encryption is the process of converting readable data
+                (plaintext) into an unreadable format (ciphertext) using a mathematical algorithm and a secret key. Only
+                someone with the correct key can decrypt it back.</p>
+              <div class="bg-black bg-opacity-30 rounded-lg p-4 mb-4">
+                <div class="font-mono text-xs theme-muted mb-2" style="color: var(--neon-primary)">
+                  Example:
+                </div>
+                <div class="font-mono text-xs mb-2 break-all">
+                  Plaintext: <span class="text-white">HELLO WORLD</span>
+                </div>
+                <div class="font-mono text-xs mb-2">
+                  Algorithm: <span class="text-white">Caesar (Shift: 3)</span>
+                </div>
+                <div class="font-mono text-xs break-all">
+                  Ciphertext: <span class="text-white">KHOOR ZRUOG</span>
+                </div>
+              </div>
+              <p class="text-xs theme-muted">✓ Used for: Securing messages, protecting files, keeping data private</p>
+            </div><!-- Decryption Info -->
+            <div class="theme-card rounded-2xl p-6 neon-border">
+              <h3 class="font-orbitron text-xl font-bold mb-4 flex items-center gap-3"
+                style="color: var(--neon-secondary)"><i data-lucide="unlock" class="w-6 h-6"></i> What is Decryption?
+              </h3>
+              <p class="theme-muted text-sm leading-relaxed mb-4">Decryption is the reverse process — converting
+                encrypted data (ciphertext) back to its original readable form (plaintext) using the correct decryption
+                key and algorithm.</p>
+              <div class="bg-black bg-opacity-30 rounded-lg p-4 mb-4">
+                <div class="font-mono text-xs theme-muted mb-2" style="color: var(--neon-secondary)">
+                  Example:
+                </div>
+                <div class="font-mono text-xs mb-2 break-all">
+                  Ciphertext: <span class="text-white">KHOOR ZRUOG</span>
+                </div>
+                <div class="font-mono text-xs mb-2">
+                  Algorithm: <span class="text-white">Caesar (Shift: 3)</span>
+                </div>
+                <div class="font-mono text-xs break-all">
+                  Plaintext: <span class="text-white">HELLO WORLD</span>
+                </div>
+              </div>
+              <p class="text-xs theme-muted">✓ Used for: Reading encrypted messages, accessing protected data, verifying
+                authenticity</p>
+            </div>
+          </div>
+        </div><!-- Encryption Panel -->
+        <div id="panel-encrypt" class="theme-card rounded-2xl p-6 md:p-8 neon-border mb-8 slide-up hidden">
+          <h2 class="font-orbitron text-2xl font-bold mb-6 flex items-center gap-3"><i data-lucide="lock"
+              class="w-6 h-6" style="color: var(--neon-primary)"></i> Encryption</h2>
+          <div class="mb-6"><label for="enc-input" class="block font-orbitron text-sm font-bold mb-2">Plaintext
+              Message</label> <textarea id="enc-input"
+              class="w-full theme-input rounded-xl p-4 font-mono text-sm resize-none h-24 focus:outline-none focus:ring-2 focus:ring-cyan-400"
+              placeholder="Enter your message here..."></textarea>
+          </div>
+          <div class="mb-6"><label class="block font-orbitron text-sm font-bold mb-3">Select Algorithms</label>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4" id="enc-algo-list"></div>
+          </div><button onclick="runEncryption()"
+            class="btn-action w-full py-4 rounded-xl font-orbitron text-lg flex items-center justify-center gap-3"> <i
+              data-lucide="zap" class="w-6 h-6"></i> Start Encryption </button>
+          <div id="enc-output" class="mt-6"></div>
+        </div><!-- Decryption Panel -->
+        <div id="panel-decrypt" class="theme-card rounded-2xl p-6 md:p-8 neon-border mb-8 slide-up hidden">
+          <h2 class="font-orbitron text-2xl font-bold mb-6 flex items-center gap-3"><i data-lucide="unlock"
+              class="w-6 h-6" style="color: var(--neon-secondary)"></i> Decryption</h2>
+          <div class="mb-6"><label for="dec-input" class="block font-orbitron text-sm font-bold mb-2">Ciphertext</label>
+            <textarea id="dec-input"
+              class="w-full theme-input rounded-xl p-4 font-mono text-sm resize-none h-24 focus:outline-none focus:ring-2 focus:ring-pink-400"
+              placeholder="Enter ciphertext here..."></textarea>
+          </div>
+          <div class="mb-6"><label class="block font-orbitron text-sm font-bold mb-3">Select Algorithm</label>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4" id="dec-algo-list"></div>
+          </div><button onclick="runDecryption()"
+            class="btn-action w-full py-4 rounded-xl font-orbitron text-lg flex items-center justify-center gap-3"> <i
+              data-lucide="zap" class="w-6 h-6"></i> Start Decryption </button>
+          <div id="dec-output" class="mt-6"></div>
+        </div><!-- Both Panel -->
+        <div id="panel-both" class="theme-card rounded-2xl p-6 md:p-8 neon-border mb-8 slide-up hidden">
+          <h2 class="font-orbitron text-2xl font-bold mb-6 flex items-center gap-3"><i data-lucide="repeat"
+              class="w-6 h-6" style="color: var(--neon-green)"></i> Encrypt &amp; Decrypt</h2>
+          <div class="mb-6"><label for="both-input" class="block font-orbitron text-sm font-bold mb-2">Plaintext
+              Message</label> <textarea id="both-input"
+              class="w-full theme-input rounded-xl p-4 font-mono text-sm resize-none h-24 focus:outline-none focus:ring-2 focus:ring-green-400"
+              placeholder="Enter your message here..."></textarea>
+          </div>
+          <div class="mb-6"><label class="block font-orbitron text-sm font-bold mb-3">Select Algorithms</label>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4" id="both-algo-list"></div>
+          </div><button onclick="runBoth()"
+            class="btn-action w-full py-4 rounded-xl font-orbitron text-lg flex items-center justify-center gap-3"> <i
+              data-lucide="zap" class="w-6 h-6"></i> Start Process </button>
+          <div id="both-output" class="mt-6"></div>
+        </div>
+      </main>
+      <footer class="text-center py-8 px-4" style="color:var(--text-secondary);font-size:14px;">
+        <hr class="neon-line mb-6" style="max-width:600px;margin:0 auto 24px;">
+        <p class="theme-muted text-sm"><span class="font-orbitron neon-glow">CRYPTO LAB</span> – <span
+            id="footer-credit-2">Designed and Developed by Keshab and Team.</span></p>
+      </footer>
+    </div>
+    <!-- HISTORY PAGE -->
+    <div id="history-page" class="w-full min-h-full relative cyber-grid hidden">
+
+      <header class="relative z-10">
+        <nav class="flex items-center justify-between px-6 py-4 max-w-7xl mx-auto">
+
+          <div class="flex items-center gap-2 cursor-pointer" onclick="showDashboard()">
+            <i data-lucide="shield" class="w-8 h-8" style="color: var(--neon-primary)"></i>
+            <span class="font-orbitron font-bold text-xl neon-glow">CRYPTO LAB</span>
+          </div>
+
+          <button onclick="showDashboard()" class="btn-neon px-4 py-2 rounded-lg font-orbitron text-sm">
+            Back to Dashboard
+          </button>
+
+        </nav>
+      </header>
+
+      <main class="relative z-10 px-6 py-8 max-w-6xl mx-auto">
+
+        <div class="flex items-center justify-between mb-6">
+
+          <h1 class="font-orbitron text-3xl font-bold neon-glow">
+            History
+          </h1>
+
+          <button onclick="clearHistory()" class="btn-neon px-4 py-2 rounded-lg font-orbitron text-sm">
+            Clear All
+          </button>
+
+        </div>
+
+        <div id="history-page-list" class="space-y-4"></div>
+
+        <p id="history-page-empty" class="text-center theme-muted py-10">
+          No operations yet.
+        </p>
+
+      </main>
+      <footer class="text-center py-8 px-4" style="color:var(--text-secondary);font-size:14px;">
+        <hr class="neon-line mb-6" style="max-width:600px;margin:0 auto 24px;">
+        <p class="theme-muted text-sm"><span class="font-orbitron neon-glow">CRYPTO LAB</span> – <span
+            id="footer-credit-2">Designed and Developed by Keshab and Team.</span></p>
+      </footer>
+
+    </div>
+  </div>
+
+
+
+  <script>
+    // ===== ALGORITHM DEFINITIONS =====
+    const ALGORITHMS = [
+      { id: 'caesar', name: 'Caesar Cipher', security: 'Low', keyLabel: 'Shift Value', keyPlaceholder: 'e.g. 3', keyMin: 1, keyMax: 25, keyInfo: 'Number 1-25', type: 'classic', canDecrypt: true },
+      { id: 'substitution', name: 'Substitution Cipher', security: 'Low', keyLabel: '26-Letter Key', keyPlaceholder: 'e.g. QWERTYUIOPASDFGHJKLZXCVBNM', keyMin: 26, keyMax: 26, keyInfo: '26 unique letters A-Z', type: 'classic', canDecrypt: true },
+      { id: 'hill', name: 'Hill Cipher', security: 'Medium', keyLabel: '2×2 Matrix', keyPlaceholder: '', keyMin: 4, keyMax: 4, keyInfo: 'Enter matrix values', type: 'classic', canDecrypt: true },
+      { id: 'des', name: 'DES', security: 'Medium', keyLabel: 'Key (8 chars)', keyPlaceholder: 'e.g. mysecret', keyMin: 8, keyMax: 8, keyInfo: 'Exactly 8 characters', type: 'block', canDecrypt: true },
+      { id: 'blowfish', name: 'Blowfish', security: 'Medium', keyLabel: 'Key (4-56 chars)', keyPlaceholder: 'e.g. myBlowfishKey', keyMin: 4, keyMax: 56, keyInfo: '4-56 characters', type: 'block', canDecrypt: true },
+      { id: 'aes', name: 'AES (Rijndael)', security: 'High', keyLabel: 'Key (16 chars = 128-bit)', keyPlaceholder: 'e.g. thisis16charkey!', keyMin: 16, keyMax: 32, keyInfo: '16, 24, or 32 characters', type: 'block', canDecrypt: true },
+      { id: 'rsa', name: 'RSA', security: 'High', keyLabel: 'Prime Numbers', keyPlaceholder: '', keyMin: 2, keyMax: 2, keyInfo: 'Enter prime numbers p and q', type: 'asymmetric', canDecrypt: true },
+      { id: 'dh', name: 'Diffie-Hellman', security: 'High', keyLabel: 'Private Key (number)', keyPlaceholder: 'e.g. 6', keyMin: 1, keyMax: 10, keyInfo: 'Small integer for demo (1-999)', type: 'exchange', canDecrypt: false },
+      { id: 'sha1', name: 'SHA-1', security: 'Medium', keyLabel: 'No Key Required', keyPlaceholder: 'Hash function — no key needed', keyMin: 0, keyMax: 0, keyInfo: 'One-way hash — cannot be decrypted', type: 'hash', canDecrypt: false }
+    ];
+
+
+    // ===== CRYPTOGRAPHIC IMPLEMENTATIONS =====
+
+    // Caesar Cipher
+    function caesarEncrypt(text, shift) {
+      shift = ((parseInt(shift) % 26) + 26) % 26;
+      return text.split('').map(c => {
+        if (/[a-z]/.test(c)) return String.fromCharCode(((c.charCodeAt(0) - 97 + shift) % 26) + 97);
+        if (/[A-Z]/.test(c)) return String.fromCharCode(((c.charCodeAt(0) - 65 + shift) % 26) + 65);
+        return c;
+      }).join('');
+    }
+    function caesarDecrypt(text, shift) { return caesarEncrypt(text, 26 - (parseInt(shift) % 26)); }
+
+    // Substitution Cipher
+    function subEncrypt(text, key) {
+      key = key.toUpperCase();
+      return text.split('').map(c => {
+        if (/[a-z]/.test(c)) return key[c.charCodeAt(0) - 97].toLowerCase();
+        if (/[A-Z]/.test(c)) return key[c.charCodeAt(0) - 65];
+        return c;
+      }).join('');
+    }
+    function subDecrypt(text, key) {
+      key = key.toUpperCase();
+      const rev = Array(26);
+      for (let i = 0; i < 26; i++) rev[key.charCodeAt(i) - 65] = String.fromCharCode(65 + i);
+      return text.split('').map(c => {
+        if (/[a-z]/.test(c)) return rev[c.charCodeAt(0) - 97].toLowerCase();
+        if (/[A-Z]/.test(c)) return rev[c.charCodeAt(0) - 65];
+        return c;
+      }).join('');
+    }
+
+    // Hill Cipher (2x2)
+    function mod(n, m) { return ((n % m) + m) % m; }
+    function modInverse(a, m) { a = mod(a, m); for (let i = 1; i < m; i++) if (mod(a * i, m) === 1) return i; return -1; }
+    // Hill Cipher (2x2 improved)
+
+    function hillEncrypt(text, keyStr) {
+
+      const nums = keyStr.split(',').map(Number);
+
+      if (nums.length !== 4) throw new Error("Need 4 numbers for 2x2 matrix");
+
+      const [a, b, c, d] = nums;
+
+      const det = mod(a * d - b * c, 26);
+
+      if (modInverse(det, 26) === -1)
+        throw new Error("Matrix not invertible mod 26");
+
+      const chars = text.split('');
+
+      const letters = chars
+        .map((c, i) => /[a-zA-Z]/.test(c) ? { c, i } : null)
+        .filter(v => v);
+
+      let clean = letters.map(x => x.c.toUpperCase()).join('');
+
+      let padded = clean.length % 2 ? clean + "X" : clean;
+
+      let enc = '';
+
+      for (let i = 0; i < padded.length; i += 2) {
+
+        const p1 = padded.charCodeAt(i) - 65;
+        const p2 = padded.charCodeAt(i + 1) - 65;
+
+        const c1 = mod(a * p1 + b * p2, 26);
+        const c2 = mod(c * p1 + d * p2, 26);
+
+        enc += String.fromCharCode(c1 + 65);
+        enc += String.fromCharCode(c2 + 65);
+      }
+
+      let result = chars.slice();
+
+      let k = 0;
+
+      letters.forEach(obj => {
+
+        let letter = enc[k++];
+
+        if (obj.c === obj.c.toLowerCase()) {
+          letter = letter.toLowerCase();
+        }
+
+        result[obj.i] = letter;
+      });
+
+      return result.join('');
+    }
+
+
+
+    function hillDecrypt(text, keyStr) {
+
+      const nums = keyStr.split(',').map(Number);
+
+      const [a, b, c, d] = nums;
+
+      const det = mod(a * d - b * c, 26);
+
+      const detInv = modInverse(det, 26);
+
+      if (detInv === -1)
+        throw new Error("Matrix not invertible mod 26");
+
+      const invA = mod(d * detInv, 26);
+      const invB = mod(-b * detInv, 26);
+      const invC = mod(-c * detInv, 26);
+      const invD = mod(a * detInv, 26);
+
+      const chars = text.split('');
+
+      const letters = chars
+        .map((c, i) => /[a-zA-Z]/.test(c) ? { c, i } : null)
+        .filter(v => v);
+
+      let clean = letters.map(x => x.c.toUpperCase()).join('');
+
+      let dec = '';
+
+      for (let i = 0; i < clean.length; i += 2) {
+
+        const p1 = clean.charCodeAt(i) - 65;
+        const p2 = clean.charCodeAt(i + 1) - 65;
+
+        const c1 = mod(invA * p1 + invB * p2, 26);
+        const c2 = mod(invC * p1 + invD * p2, 26);
+
+        dec += String.fromCharCode(c1 + 65);
+        dec += String.fromCharCode(c2 + 65);
+      }
+
+      let result = chars.slice();
+
+      let k = 0;
+
+      letters.forEach(obj => {
+
+        let letter = dec[k++];
+
+        if (obj.c === obj.c.toLowerCase()) {
+          letter = letter.toLowerCase();
+        }
+
+        result[obj.i] = letter;
+      });
+
+      return result.join('');
+    }
+    // DES Implementation (simplified but real Feistel structure)
+    function desKeySchedule(keyBytes) {
+      const subkeys = [];
+      let state = 0n;
+      for (const b of keyBytes) state = (state << 8n) | BigInt(b);
+      for (let i = 0; i < 16; i++) {
+        state = ((state << 1n) | (state >> 55n)) & 0xFFFFFFFFFFFFFFn;
+        subkeys.push(state & 0xFFFFFFFFFFFFn);
+      }
+      return subkeys;
+    }
+    function desFeistel(half, subkey) {
+      let expanded = half ^ (subkey & 0xFFFFFFFFn);
+      let result = 0n;
+      for (let i = 0; i < 8; i++) {
+        const chunk = Number((expanded >> BigInt(i * 4)) & 0xFn);
+        const sVal = (chunk * 3 + 7) & 0xF;
+        result |= BigInt(sVal) << BigInt(i * 4);
+      }
+      return result & 0xFFFFFFFFn;
+    }
+    function desProcessBlock(block, subkeys) {
+      let L = (block >> 32n) & 0xFFFFFFFFn;
+      let R = block & 0xFFFFFFFFn;
+      for (let i = 0; i < 16; i++) {
+        const temp = R;
+        R = L ^ desFeistel(R, subkeys[i]);
+        L = temp;
+      }
+      return (R << 32n) | L;
+    }
+    function desEncrypt(text, key) {
+      const keyBytes = Array.from(key).map(c => c.charCodeAt(0));
+      while (keyBytes.length < 8) keyBytes.push(0);
+      const subkeys = desKeySchedule(keyBytes.slice(0, 8));
+      const bytes = Array.from(text).map(c => c.charCodeAt(0));
+      while (bytes.length % 8 !== 0) bytes.push(0);
+      let result = '';
+      for (let i = 0; i < bytes.length; i += 8) {
+        let block = 0n;
+        for (let j = 0; j < 8; j++) block = (block << 8n) | BigInt(bytes[i + j] || 0);
+        const enc = desProcessBlock(block, subkeys);
+        for (let j = 7; j >= 0; j--) result += ('0' + Number((enc >> BigInt(j * 8)) & 0xFFn).toString(16)).slice(-2);
+      }
+      return result.toUpperCase();
+    }
+    function desDecrypt(hex, key) {
+      const keyBytes = Array.from(key).map(c => c.charCodeAt(0));
+      while (keyBytes.length < 8) keyBytes.push(0);
+      const subkeys = desKeySchedule(keyBytes.slice(0, 8)).reverse();
+      const cleanHex = hex.replace(/\s/g, '');
+      let result = '';
+      for (let i = 0; i < cleanHex.length; i += 16) {
+        let block = BigInt('0x' + cleanHex.slice(i, i + 16).padEnd(16, '0'));
+        const dec = desProcessBlock(block, subkeys);
+        for (let j = 7; j >= 0; j--) { const ch = Number((dec >> BigInt(j * 8)) & 0xFFn); if (ch > 0) result += String.fromCharCode(ch); }
+      }
+      return result;
+    }
+
+    // Blowfish (real Feistel with key-dependent S-boxes)
+    function blowfishInit(key) {
+      const P = new Uint32Array(18);
+      const S = [new Uint32Array(256), new Uint32Array(256), new Uint32Array(256), new Uint32Array(256)];
+      // Initialize P and S with digits of pi (simplified seeding)
+      let seed = 0x243F6A88;
+      for (let i = 0; i < 18; i++) { P[i] = seed; seed = (seed * 1664525 + 1013904223) >>> 0; }
+      for (let s = 0; s < 4; s++) for (let i = 0; i < 256; i++) { S[s][i] = seed; seed = (seed * 1664525 + 1013904223) >>> 0; }
+      // XOR P with key
+      const kb = Array.from(key).map(c => c.charCodeAt(0));
+      for (let i = 0; i < 18; i++) {
+        let data = 0;
+        for (let j = 0; j < 4; j++) data = ((data << 8) | kb[(i * 4 + j) % kb.length]) >>> 0;
+        P[i] ^= data;
+      }
+      // Key expansion
+      let L = 0, R = 0;
+      for (let i = 0; i < 18; i += 2) {
+        [L, R] = bfEncryptBlock(L, R, P, S);
+        P[i] = L; P[i + 1] = R;
+      }
+      for (let s = 0; s < 4; s++) for (let i = 0; i < 256; i += 2) {
+        [L, R] = bfEncryptBlock(L, R, P, S);
+        S[s][i] = L; S[s][i + 1] = R;
+      }
+      return { P, S };
+    }
+    function bfF(x, S) {
+      const a = (x >>> 24) & 0xFF, b = (x >>> 16) & 0xFF, c = (x >>> 8) & 0xFF, d = x & 0xFF;
+      return (((S[0][a] + S[1][b]) >>> 0) ^ S[2][c]) + S[3][d] >>> 0;
+    }
+    function bfEncryptBlock(L, R, P, S) {
+      for (let i = 0; i < 16; i++) { L ^= P[i]; R ^= bfF(L, S);[L, R] = [R, L]; }
+      [L, R] = [R, L]; R ^= P[16]; L ^= P[17];
+      return [L >>> 0, R >>> 0];
+    }
+    function bfDecryptBlock(L, R, P, S) {
+      for (let i = 17; i > 1; i--) { L ^= P[i]; R ^= bfF(L, S);[L, R] = [R, L]; }
+      [L, R] = [R, L]; R ^= P[1]; L ^= P[0];
+      return [L >>> 0, R >>> 0];
+    }
+    function blowfishEncrypt(text, key) {
+      const { P, S } = blowfishInit(key);
+      const bytes = Array.from(text).map(c => c.charCodeAt(0));
+      while (bytes.length % 8 !== 0) bytes.push(0);
+      let hex = '';
+      for (let i = 0; i < bytes.length; i += 8) {
+        let L = ((bytes[i] << 24) | (bytes[i + 1] << 16) | (bytes[i + 2] << 8) | bytes[i + 3]) >>> 0;
+        let R = ((bytes[i + 4] << 24) | (bytes[i + 5] << 16) | (bytes[i + 6] << 8) | bytes[i + 7]) >>> 0;
+        [L, R] = bfEncryptBlock(L, R, P, S);
+        hex += ('00000000' + L.toString(16)).slice(-8) + ('00000000' + R.toString(16)).slice(-8);
+      }
+      return hex.toUpperCase();
+    }
+    function blowfishDecrypt(hex, key) {
+      const { P, S } = blowfishInit(key);
+      const cleanHex = hex.replace(/\s/g, '').toLowerCase();
+      let result = '';
+      for (let i = 0; i < cleanHex.length; i += 16) {
+        const chunk = cleanHex.slice(i, i + 16).padEnd(16, '0');
+        let L = parseInt(chunk.slice(0, 8), 16) >>> 0;
+        let R = parseInt(chunk.slice(8, 16), 16) >>> 0;
+        [L, R] = bfDecryptBlock(L, R, P, S);
+        for (let j = 24; j >= 0; j -= 8) { const ch = (L >>> j) & 0xFF; if (ch) result += String.fromCharCode(ch); }
+        for (let j = 24; j >= 0; j -= 8) { const ch = (R >>> j) & 0xFF; if (ch) result += String.fromCharCode(ch); }
+      }
+      return result;
+    }
+
+    // AES (Rijndael) — real SubBytes, ShiftRows, MixColumns, AddRoundKey
+    const AES_SBOX = [0x63, 0x7c, 0x77, 0x7b, 0xf2, 0x6b, 0x6f, 0xc5, 0x30, 0x01, 0x67, 0x2b, 0xfe, 0xd7, 0xab, 0x76, 0xca, 0x82, 0xc9, 0x7d, 0xfa, 0x59, 0x47, 0xf0, 0xad, 0xd4, 0xa2, 0xaf, 0x9c, 0xa4, 0x72, 0xc0, 0xb7, 0xfd, 0x93, 0x26, 0x36, 0x3f, 0xf7, 0xcc, 0x34, 0xa5, 0xe5, 0xf1, 0x71, 0xd8, 0x31, 0x15, 0x04, 0xc7, 0x23, 0xc3, 0x18, 0x96, 0x05, 0x9a, 0x07, 0x12, 0x80, 0xe2, 0xeb, 0x27, 0xb2, 0x75, 0x09, 0x83, 0x2c, 0x1a, 0x1b, 0x6e, 0x5a, 0xa0, 0x52, 0x3b, 0xd6, 0xb3, 0x29, 0xe3, 0x2f, 0x84, 0x53, 0xd1, 0x00, 0xed, 0x20, 0xfc, 0xb1, 0x5b, 0x6a, 0xcb, 0xbe, 0x39, 0x4a, 0x4c, 0x58, 0xcf, 0xd0, 0xef, 0xaa, 0xfb, 0x43, 0x4d, 0x33, 0x85, 0x45, 0xf9, 0x02, 0x7f, 0x50, 0x3c, 0x9f, 0xa8, 0x51, 0xa3, 0x40, 0x8f, 0x92, 0x9d, 0x38, 0xf5, 0xbc, 0xb6, 0xda, 0x21, 0x10, 0xff, 0xf3, 0xd2, 0xcd, 0x0c, 0x13, 0xec, 0x5f, 0x97, 0x44, 0x17, 0xc4, 0xa7, 0x7e, 0x3d, 0x64, 0x5d, 0x19, 0x73, 0x60, 0x81, 0x4f, 0xdc, 0x22, 0x2a, 0x90, 0x88, 0x46, 0xee, 0xb8, 0x14, 0xde, 0x5e, 0x0b, 0xdb, 0xe0, 0x32, 0x3a, 0x0a, 0x49, 0x06, 0x24, 0x5c, 0xc2, 0xd3, 0xac, 0x62, 0x91, 0x95, 0xe4, 0x79, 0xe7, 0xc8, 0x37, 0x6d, 0x8d, 0xd5, 0x4e, 0xa9, 0x6c, 0x56, 0xf4, 0xea, 0x65, 0x7a, 0xae, 0x08, 0xba, 0x78, 0x25, 0x2e, 0x1c, 0xa6, 0xb4, 0xc6, 0xe8, 0xdd, 0x74, 0x1f, 0x4b, 0xbd, 0x8b, 0x8a, 0x70, 0x3e, 0xb5, 0x66, 0x48, 0x03, 0xf6, 0x0e, 0x61, 0x35, 0x57, 0xb9, 0x86, 0xc1, 0x1d, 0x9e, 0xe1, 0xf8, 0x98, 0x11, 0x69, 0xd9, 0x8e, 0x94, 0x9b, 0x1e, 0x87, 0xe9, 0xce, 0x55, 0x28, 0xdf, 0x8c, 0xa1, 0x89, 0x0d, 0xbf, 0xe6, 0x42, 0x68, 0x41, 0x99, 0x2d, 0x0f, 0xb0, 0x54, 0xbb, 0x16];
+    const AES_INV_SBOX = new Array(256);
+    for (let i = 0; i < 256; i++) AES_INV_SBOX[AES_SBOX[i]] = i;
+    const AES_RCON = [0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80, 0x1b, 0x36];
+
+    function aesKeyExpansion(key) {
+      const nk = key.length / 4, nr = nk + 6;
+      const w = new Uint8Array((nr + 1) * 16);
+      for (let i = 0; i < key.length; i++) w[i] = key[i];
+      for (let i = nk; i < 4 * (nr + 1); i++) {
+        let t = [w[(i - 1) * 4], w[(i - 1) * 4 + 1], w[(i - 1) * 4 + 2], w[(i - 1) * 4 + 3]];
+        if (i % nk === 0) {
+          t = [AES_SBOX[t[1]], AES_SBOX[t[2]], AES_SBOX[t[3]], AES_SBOX[t[0]]];
+          t[0] ^= AES_RCON[(i / nk) - 1];
+        } else if (nk > 6 && i % nk === 4) t = t.map(b => AES_SBOX[b]);
+        for (let j = 0; j < 4; j++) w[i * 4 + j] = w[(i - nk) * 4 + j] ^ t[j];
+      }
+      return { w, nr };
+    }
+    function aesSub(s) { for (let i = 0; i < 16; i++)s[i] = AES_SBOX[s[i]]; }
+    function aesInvSub(s) { for (let i = 0; i < 16; i++)s[i] = AES_INV_SBOX[s[i]]; }
+    function aesShift(s) { const t = [...s]; s[1] = t[5]; s[5] = t[9]; s[9] = t[13]; s[13] = t[1]; s[2] = t[10]; s[6] = t[14]; s[10] = t[2]; s[14] = t[6]; s[3] = t[15]; s[7] = t[3]; s[11] = t[7]; s[15] = t[11]; }
+    function aesInvShift(s) { const t = [...s]; s[5] = t[1]; s[9] = t[5]; s[13] = t[9]; s[1] = t[13]; s[10] = t[2]; s[14] = t[6]; s[2] = t[10]; s[6] = t[14]; s[15] = t[3]; s[3] = t[7]; s[7] = t[11]; s[11] = t[15]; }
+    function gmul(a, b) { let p = 0; for (let i = 0; i < 8; i++) { if (b & 1) p ^= a; const hi = a & 0x80; a = (a << 1) & 0xFF; if (hi) a ^= 0x1b; b >>= 1; } return p; }
+    function aesMix(s) { for (let c = 0; c < 4; c++) { const i = c * 4; const a = [s[i], s[i + 1], s[i + 2], s[i + 3]]; s[i] = gmul(2, a[0]) ^ gmul(3, a[1]) ^ a[2] ^ a[3]; s[i + 1] = a[0] ^ gmul(2, a[1]) ^ gmul(3, a[2]) ^ a[3]; s[i + 2] = a[0] ^ a[1] ^ gmul(2, a[2]) ^ gmul(3, a[3]); s[i + 3] = gmul(3, a[0]) ^ a[1] ^ a[2] ^ gmul(2, a[3]); } }
+    function aesInvMix(s) { for (let c = 0; c < 4; c++) { const i = c * 4; const a = [s[i], s[i + 1], s[i + 2], s[i + 3]]; s[i] = gmul(14, a[0]) ^ gmul(11, a[1]) ^ gmul(13, a[2]) ^ gmul(9, a[3]); s[i + 1] = gmul(9, a[0]) ^ gmul(14, a[1]) ^ gmul(11, a[2]) ^ gmul(13, a[3]); s[i + 2] = gmul(13, a[0]) ^ gmul(9, a[1]) ^ gmul(14, a[2]) ^ gmul(11, a[3]); s[i + 3] = gmul(11, a[0]) ^ gmul(13, a[1]) ^ gmul(9, a[2]) ^ gmul(14, a[3]); } }
+    function aesAddKey(s, w, r) { for (let i = 0; i < 16; i++)s[i] ^= w[r * 16 + i]; }
+
+    function aesEncryptBlock(block, keyBytes) {
+      const { w, nr } = aesKeyExpansion(keyBytes);
+      const s = [...block];
+      aesAddKey(s, w, 0);
+      for (let r = 1; r < nr; r++) { aesSub(s); aesShift(s); aesMix(s); aesAddKey(s, w, r); }
+      aesSub(s); aesShift(s); aesAddKey(s, w, nr);
+      return s;
+    }
+    function aesDecryptBlock(block, keyBytes) {
+      const { w, nr } = aesKeyExpansion(keyBytes);
+      const s = [...block];
+      aesAddKey(s, w, nr);
+      for (let r = nr - 1; r > 0; r--) { aesInvShift(s); aesInvSub(s); aesAddKey(s, w, r); aesInvMix(s); }
+      aesInvShift(s); aesInvSub(s); aesAddKey(s, w, 0);
+      return s;
+    }
+    function aesEncrypt(text, key) {
+      const keyBytes = Array.from(key).map(c => c.charCodeAt(0));
+      while (keyBytes.length < 16) keyBytes.push(0);
+      const padKey = keyBytes.slice(0, keyBytes.length <= 16 ? 16 : keyBytes.length <= 24 ? 24 : 32);
+      const bytes = Array.from(text).map(c => c.charCodeAt(0));
+      const pad = 16 - (bytes.length % 16); for (let i = 0; i < pad; i++)bytes.push(pad);
+      let hex = '';
+      for (let i = 0; i < bytes.length; i += 16) {
+        const block = bytes.slice(i, i + 16);
+        const enc = aesEncryptBlock(block, padKey);
+        enc.forEach(b => hex += ('0' + b.toString(16)).slice(-2));
+      }
+      return hex.toUpperCase();
+    }
+    function aesDecrypt(hex, key) {
+      const keyBytes = Array.from(key).map(c => c.charCodeAt(0));
+      while (keyBytes.length < 16) keyBytes.push(0);
+      const padKey = keyBytes.slice(0, keyBytes.length <= 16 ? 16 : keyBytes.length <= 24 ? 24 : 32);
+      const cleanHex = hex.replace(/\s/g, '').toLowerCase();
+      let bytes = [];
+      for (let i = 0; i < cleanHex.length; i += 32) {
+        const chunk = cleanHex.slice(i, i + 32).padEnd(32, '0');
+        const block = []; for (let j = 0; j < 32; j += 2)block.push(parseInt(chunk.slice(j, j + 2), 16));
+        bytes.push(...aesDecryptBlock(block, padKey));
+      }
+      // Remove PKCS7 padding
+      if (bytes.length > 0) { const pad = bytes[bytes.length - 1]; if (pad > 0 && pad <= 16) bytes = bytes.slice(0, bytes.length - pad); }
+      return bytes.map(b => String.fromCharCode(b)).join('');
+    }
+
+    // ---- RSA (small primes, educational) ----
+
+    function gcd(a, b) {
+      while (b) { [a, b] = [b, a % b]; }
+      return a;
+    }
+
+    function modPow(base, exp, mod) {
+      let result = 1n;
+      base = ((base % mod) + mod) % mod;
+
+      while (exp > 0n) {
+        if (exp % 2n === 1n) result = (result * base) % mod;
+        exp = exp / 2n;
+        base = (base * base) % mod;
+      }
+
+      return result;
+    }
+
+    function rsaEncrypt(text, keyStr) {
+
+      const parts = keyStr.split(',').map(s => parseInt(s.trim()));
+
+      if (parts.length !== 2 || parts.some(isNaN))
+        return '[ERROR: Need two primes e.g. 61,53]';
+
+      const [p, q] = parts;
+
+      const n = BigInt(p) * BigInt(q);
+      const phi = (BigInt(p) - 1n) * (BigInt(q) - 1n);
+
+      let e = 65537n;
+
+      if (e >= phi) e = 17n;
+
+      if (gcd(Number(e), Number(phi)) !== 1) {
+
+        for (let candidate = 3n; candidate < phi; candidate += 2n) {
+
+          if (gcd(Number(candidate), Number(phi)) === 1) {
+            e = candidate;
+            break;
+          }
+        }
+      }
+
+      const encrypted = [];
+
+      for (let i = 0; i < text.length; i++) {
+
+        const m = BigInt(text.charCodeAt(i));
+
+        if (m >= n) {
+          encrypted.push('?');
+          continue;
+        }
+
+        encrypted.push(modPow(m, e, n).toString());
+      }
+
+      return encrypted.join(',');
+    }
+
+    function rsaDecrypt(cipher, keyStr) {
+
+      const parts = keyStr.split(',').map(s => parseInt(s.trim()));
+
+      if (parts.length !== 2 || parts.some(isNaN))
+        return '[ERROR: Need two primes]';
+
+      const [p, q] = parts;
+
+      const n = BigInt(p) * BigInt(q);
+      const phi = (BigInt(p) - 1n) * (BigInt(q) - 1n);
+
+      let e = 65537n;
+
+      if (e >= phi) e = 17n;
+
+      if (gcd(Number(e), Number(phi)) !== 1) {
+
+        for (let candidate = 3n; candidate < phi; candidate += 2n) {
+
+          if (gcd(Number(candidate), Number(phi)) === 1) {
+            e = candidate;
+            break;
+          }
+        }
+      }
+
+      let d = 1n;
+
+      for (let i = 1n; i < phi * 2n; i++) {
+        if ((e * i) % phi === 1n) {
+          d = i;
+          break;
+        }
+      }
+
+      try {
+
+        const nums = cipher.split(',');
+
+        let result = '';
+
+        for (const numStr of nums) {
+
+          const c = BigInt(numStr.trim());
+
+          const m = modPow(c, d, n);
+
+          result += String.fromCharCode(Number(m));
+        }
+
+        return result;
+
+      } catch {
+        return '[ERROR: Invalid ciphertext format]';
+      }
+    }
+    // Diffie-Hellman
+    function dhKeyExchange(privateKey) {
+
+      const p = 23n;
+      const g = 5n;
+
+      const pk = BigInt(privateKey);
+
+      const publicKey = modPow(g, pk, p);
+
+      const otherPrivate = BigInt(Math.floor(Math.random() * 10) + 2);
+
+      const otherPublic = modPow(g, otherPrivate, p);
+
+      const sharedSecret = modPow(otherPublic, pk, p);
+
+      return {
+        p: p.toString(),
+        g: g.toString(),
+        publicKey: publicKey.toString(),
+        otherPublic: otherPublic.toString(),
+        sharedSecret: sharedSecret.toString()
+      };
+    }
+    // SHA-1
+    function sha1(msg) {
+      function rotl(n, s) { return ((n << s) | (n >>> (32 - s))) >>> 0; }
+      const utf8 = unescape(encodeURIComponent(msg));
+      const bytes = []; for (let i = 0; i < utf8.length; i++)bytes.push(utf8.charCodeAt(i));
+      bytes.push(0x80);
+      while (bytes.length % 64 !== 56) bytes.push(0);
+      const bitLen = utf8.length * 8;
+      bytes.push(0, 0, 0, 0, (bitLen >>> 24) & 0xFF, (bitLen >>> 16) & 0xFF, (bitLen >>> 8) & 0xFF, bitLen & 0xFF);
+      let h0 = 0x67452301, h1 = 0xEFCDAB89, h2 = 0x98BADCFE, h3 = 0x10325476, h4 = 0xC3D2E1F0;
+      for (let i = 0; i < bytes.length; i += 64) {
+        const w = new Uint32Array(80);
+        for (let j = 0; j < 16; j++)w[j] = (bytes[i + j * 4] << 24) | (bytes[i + j * 4 + 1] << 16) | (bytes[i + j * 4 + 2] << 8) | bytes[i + j * 4 + 3];
+        for (let j = 16; j < 80; j++)w[j] = rotl(w[j - 3] ^ w[j - 8] ^ w[j - 14] ^ w[j - 16], 1);
+        let a = h0, b = h1, c = h2, d = h3, e = h4;
+        for (let j = 0; j < 80; j++) {
+          let f, k;
+          if (j < 20) { f = (b & c) | ((~b) & d); k = 0x5A827999; }
+          else if (j < 40) { f = b ^ c ^ d; k = 0x6ED9EBA1; }
+          else if (j < 60) { f = (b & c) | (b & d) | (c & d); k = 0x8F1BBCDC; }
+          else { f = b ^ c ^ d; k = 0xCA62C1D6; }
+          const temp = (rotl(a, 5) + f + e + k + w[j]) >>> 0;
+          e = d; d = c; c = rotl(b, 30); b = a; a = temp;
+        }
+        h0 = (h0 + a) >>> 0; h1 = (h1 + b) >>> 0; h2 = (h2 + c) >>> 0; h3 = (h3 + d) >>> 0; h4 = (h4 + e) >>> 0;
+      }
+      return [h0, h1, h2, h3, h4].map(h => ('00000000' + h.toString(16)).slice(-8)).join('').toUpperCase();
+    }
+
+    // ===== ENCRYPT/DECRYPT DISPATCHER =====
+    function encrypt(algoId, text, key) {
+      switch (algoId) {
+        case 'caesar': return caesarEncrypt(text, parseInt(key));
+        case 'substitution': return subEncrypt(text, key);
+        case 'hill': return hillEncrypt(text, key);
+        case 'des': return desEncrypt(text, key);
+        case 'blowfish': return blowfishEncrypt(text, key);
+        case 'aes': return aesEncrypt(text, key);
+        case 'rsa': return rsaEncrypt(text, key);
+        case 'dh': { const r = dhKeyExchange(key); return JSON.stringify(r); }
+        case 'sha1': return sha1(text);
+        default: return 'Unknown algorithm';
+      }
+    }
+    function decrypt(algoId, cipher, key) {
+      switch (algoId) {
+        case 'caesar': return caesarDecrypt(cipher, parseInt(key));
+        case 'substitution': return subDecrypt(cipher, key);
+        case 'hill': return hillDecrypt(cipher, key);
+        case 'des': return desDecrypt(cipher, key);
+        case 'blowfish': return blowfishDecrypt(cipher, key);
+        case 'aes': return aesDecrypt(cipher, key);
+        case 'rsa': return rsaDecrypt(cipher, key);
+        default: return 'Cannot decrypt with this algorithm';
+      }
+    }
+
+    // ===== UI STATE =====
+    let currentMode = 'encrypt';
+    let history = JSON.parse(localStorage.getItem('cryptoLabHistory') || '[]');
+    let currentTheme = localStorage.getItem('cryptoLabTheme') || 'dark';
+
+    // ===== DEFAULT CONFIG =====
+    const defaultConfig = {
+      site_title: 'CRYPTO LAB',
+      hero_button_text: "Let's Get Started",
+      footer_text: 'Designed and Developed by Keshab and Team.',
+      background_color: '#0a0a1a',
+      surface_color: '#111128',
+      text_color: '#e0e0f0',
+      primary_action_color: '#00f0ff',
+      secondary_action_color: '#ff00e5',
+      font_family: 'Rajdhani',
+      font_size: 16
+    };
+
+
+
+    // ===== THEME =====
+    function applyTheme(theme) {
+      currentTheme = theme;
+      document.documentElement.setAttribute('data-theme', theme);
+      document.documentElement.classList.toggle('dark', theme === 'dark');
+      const showDark = theme === 'dark';
+      ['', '_2'].forEach(s => {
+        const dk = document.getElementById('theme-icon-dark' + s.replace('_', '-'));
+        const lt = document.getElementById('theme-icon-light' + s.replace('_', '-'));
+        if (dk) dk.classList.toggle('hidden', !showDark);
+        if (lt) lt.classList.toggle('hidden', showDark);
+      });
+      // Fix IDs
+      const dk1 = document.getElementById('theme-icon-dark');
+      const lt1 = document.getElementById('theme-icon-light');
+      const dk2 = document.getElementById('theme-icon-dark-2');
+      const lt2 = document.getElementById('theme-icon-light-2');
+      if (dk1) dk1.classList.toggle('hidden', !showDark);
+      if (lt1) lt1.classList.toggle('hidden', showDark);
+      if (dk2) dk2.classList.toggle('hidden', !showDark);
+      if (lt2) lt2.classList.toggle('hidden', showDark);
+      localStorage.setItem('cryptoLabTheme', theme);
+    }
+    document.getElementById('theme-toggle').addEventListener('click', () => applyTheme(currentTheme === 'dark' ? 'light' : 'dark'));
+    document.getElementById('theme-toggle-2').addEventListener('click', () => applyTheme(currentTheme === 'dark' ? 'light' : 'dark'));
+    applyTheme(currentTheme);
+
+    // ===== TYPING EFFECT =====
+    const slogans = [
+  'Securing the Digital Frontier',
+  'Where Mathematics Meets Security',
+  'Encrypt Everything, Trust Nothing',
+  'Your Data, Your Shield',
+  'Cryptography Made Visual',
+  'Break Barriers, Not Encryption',
+  'Secure Your Data. Empower Your Privacy.',
+  'Where Cryptography Meets Innovation.',
+  'Designed and Developed by Keshab and Team',
+  'Encrypt. Protect. Trust.',
+  'Turning Plaintext into Powerful Protection.',
+  'Advanced Encryption for a Secure Digital World.',
+  'Decode the Future of Security.',
+  'Your Gateway to Modern Cryptography.',
+  'Transforming Messages into Unbreakable Codes.',
+  'Security Through Intelligent Encryption.',
+  'Explore the Power of Cryptographic Algorithms.',
+  'Designed and Developed by Keshab and Team'
+];
+    let sloganIdx = 0, charIdx = 0, isDeleting = false;
+    function typeEffect() {
+      const el = document.getElementById('typing-text');
+      if (!el) return;
+      const current = slogans[sloganIdx];
+      if (isDeleting) {
+        el.textContent = current.substring(0, charIdx--);
+        if (charIdx < 0) { isDeleting = false; sloganIdx = (sloganIdx + 1) % slogans.length; setTimeout(typeEffect, 400); return; }
+        setTimeout(typeEffect, 30);
+      } else {
+        el.textContent = current.substring(0, charIdx++);
+        if (charIdx > current.length) { setTimeout(() => { isDeleting = true; typeEffect(); }, 2000); return; }
+        setTimeout(typeEffect, 60);
+      }
+    }
+    typeEffect();
+
+    // ===== PARTICLES =====
+    function createParticles(containerId, count) {
+      const c = document.getElementById(containerId);
+      if (!c) return;
+      for (let i = 0; i < count; i++) {
+        const p = document.createElement('div');
+        p.className = 'hex-particle';
+        p.style.left = Math.random() * 100 + '%';
+        p.style.top = Math.random() * 100 + '%';
+        p.style.animationDelay = Math.random() * 8 + 's';
+        p.style.animationDuration = (6 + Math.random() * 6) + 's';
+        c.appendChild(p);
+      }
+    }
+    createParticles('particles', 20);
+    createParticles('particles2', 15);
+
+    // ===== NAVIGATION =====
+    function showDashboard() {
+      document.getElementById('landing-page').classList.add('hidden');
+      document.getElementById('dashboard-page').classList.remove('hidden');
+      document.getElementById("history-page").classList.add("hidden");
+      document.getElementById('dashboard-page').scrollTop = 0;
+      resetDashboardInputs();
+      window.scrollTo(0, 0);
+    }
+    function showLanding() {
+      document.getElementById('dashboard-page').classList.add('hidden');
+      document.getElementById("history-page").classList.add("hidden");
+      document.getElementById('landing-page').classList.remove('hidden');
+      window.scrollTo(0, 0);
+    }
+
+    function showHistoryPage() {
+
+      document.getElementById('dashboard-page').classList.add('hidden');
+      document.getElementById('landing-page').classList.add('hidden');
+      document.getElementById('history-page').classList.remove('hidden');
+
+      renderHistoryPage();
+
+      window.scrollTo(0, 0);
+
+    }
+
+    function resetDashboardInputs() {
+
+      // clear message inputs
+      const enc = document.getElementById("enc-input");
+      const dec = document.getElementById("dec-input");
+      const both = document.getElementById("both-input");
+
+      if (enc) enc.value = "";
+      if (dec) dec.value = "";
+      if (both) both.value = "";
+
+      // clear outputs
+      const encOut = document.getElementById("enc-output");
+      const decOut = document.getElementById("dec-output");
+      const bothOut = document.getElementById("both-output");
+
+      if (encOut) encOut.innerHTML = "";
+      if (decOut) decOut.innerHTML = "";
+      if (bothOut) bothOut.innerHTML = "";
+
+    }
+
+
+
+    // ===== ACCORDION =====
+    function toggleAccordion(btn) {
+      const content = btn.nextElementSibling;
+      const icon = btn.querySelector('[data-lucide="chevron-down"]');
+      content.classList.toggle('hidden');
+      if (icon) icon.style.transform = content.classList.contains('hidden') ? '' : 'rotate(180deg)';
+    }
+
+    // ===== SCROLL REVEAL =====
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el));
+
+    // ===== MODE SWITCHING =====
+    function setMode(mode) {
+      currentMode = mode;
+      ['encrypt', 'decrypt', 'both'].forEach(m => {
+        document.getElementById('mode-' + m).classList.toggle('active', m === mode);
+        document.getElementById('panel-' + m).classList.toggle('hidden', m !== mode);
+      });
+      // Hide info section when a mode is selected
+      const infoSection = document.getElementById('info-section');
+      if (infoSection) infoSection.classList.add('hidden');
+    }
+
+    // ===== BUILD ALGORITHM LISTS =====
+    function buildAlgoList(containerId, type, multiSelect) {
+      const container = document.getElementById(containerId);
+      container.innerHTML = '';
+      const algos = type === 'decrypt' ? ALGORITHMS.filter(a => a.canDecrypt) : ALGORITHMS;
+      algos.forEach(algo => {
+        const inputType = multiSelect ? 'checkbox' : 'radio';
+        const name = containerId + '-algo';
+        const id = containerId + '-' + algo.id;
+        const secEmoji = algo.security === 'Low' ? '⚠️' : algo.security === 'Medium' ? '🔒' : '🛡️';
+        const secColor = algo.security === 'Low' ? 'rgba(255,0,68,0.15)' : algo.security === 'Medium' ? 'rgba(255,102,0,0.15)' : 'rgba(57,255,20,0.15)';
+        const secBorder = algo.security === 'Low' ? 'rgba(255,0,68,0.3)' : algo.security === 'Medium' ? 'rgba(255,102,0,0.3)' : 'rgba(57,255,20,0.3)';
+        const secText = algo.security === 'Low' ? 'var(--neon-red)' : algo.security === 'Medium' ? 'var(--neon-orange)' : 'var(--neon-green)';
+        const needsKey = algo.keyMin > 0;
+
+        container.innerHTML += `
+      <div class="scale-in">
+        <input type="${inputType}" name="${name}" id="${id}" value="${algo.id}" class="algo-check" onchange="updateKeyVisibility('${containerId}','${type}')">
+        <label for="${id}" class="algo-label theme-card rounded-xl p-5 neon-border cursor-pointer hover:bg-opacity-80 transition-all h-full flex flex-col">
+          <div class="flex items-start justify-between gap-3 w-full flex-shrink-0 mb-3">
+            <div class="flex-1">
+              <div class="font-orbitron font-bold text-base leading-tight mb-1.5">${algo.name}</div>
+              <div class="text-xs theme-muted">${algo.keyInfo}</div>
+            </div>
+            <div class="flex-shrink-0 px-3 py-1.5 rounded-full font-orbitron text-xs font-bold flex items-center gap-1.5 whitespace-nowrap" style="background:${secColor};border:1px solid ${secBorder};color:${secText}">
+              <span>${secEmoji}</span>
+              <span>${algo.security}</span>
+            </div>
+          </div>
+          <div class="flex-1 min-w-0">
+            ${needsKey ? `
+
+<div class="space-y-2 key-section-${containerId}-${algo.id} hidden overflow-hidden">
+
+    ${algo.id === 'rsa' ? `
+
+    <div class="grid grid-cols-2 gap-2">
+        <label class="text-xs font-orbitron">p</label>
+        <label class="text-xs font-orbitron">q</label>
+
+        <input type="number" id="key-${type}-rsa-p" class="theme-input rounded-lg p-2 font-mono text-xs" placeholder="p">
+
+        <input type="number" id="key-${type}-rsa-q" class="theme-input rounded-lg p-2 font-mono text-xs" placeholder="q">
+    </div>
+
+    ` : algo.id === 'hill' ? `
+
+    <div class="grid grid-cols-2 gap-2">
+
+        <input type="number" id="key-${type}-hill-a" class="theme-input rounded-lg p-2 font-mono text-xs" placeholder="a">
+
+        <input type="number" id="key-${type}-hill-b" class="theme-input rounded-lg p-2 font-mono text-xs" placeholder="b">
+
+        <input type="number" id="key-${type}-hill-c" class="theme-input rounded-lg p-2 font-mono text-xs" placeholder="c">
+
+        <input type="number" id="key-${type}-hill-d" class="theme-input rounded-lg p-2 font-mono text-xs" placeholder="d">
+
+    </div>
+
+    ` : `
+
+    <input type="text" id="key-${type}-${algo.id}" class="w-full theme-input rounded-lg p-2.5 font-mono text-xs" placeholder="${algo.keyPlaceholder}" data-algo="${algo.id}">
+
+    `}
+
+</div>
+
+` : ``}
+          </div>
+        </label>
+      </div>`;
+      });
+    }
+    buildAlgoList('enc-algo-list', 'encrypt', true);
+    buildAlgoList('dec-algo-list', 'decrypt', false);
+    buildAlgoList('both-algo-list', 'both', true);
+
+    // ===== UPDATE KEY VISIBILITY =====
+    function updateKeyVisibility(listId, type) {
+      const checked = [...document.querySelectorAll(`#${listId} input:checked`)];
+      const allAlgos = ALGORITHMS;
+
+      allAlgos.forEach(algo => {
+        const section = document.querySelector(`.key-section-${listId}-${algo.id}`);
+        if (section) {
+          const isSelected = checked.some(c => c.value === algo.id);
+          if (isSelected) {
+            section.classList.remove('hidden', 'collapse-key');
+            section.classList.add('expand-key');
+          } else {
+            section.classList.remove('expand-key');
+            section.classList.add('collapse-key', 'hidden');
+          }
+        }
+      });
+      lucide.createIcons();
+    }
+
+    // ===== TOAST =====
+    function showToast(msg, type = 'success') {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      toast.className = `toast toast-${type}`;
+      toast.textContent = msg;
+      container.appendChild(toast);
+      setTimeout(() => toast.remove(), 3000);
+    }
+
+    // ===== VALIDATE KEY =====
+    function validateKey(algo, key) {
+
+      if (algo.id === 'rsa') {
+
+        const parts = key.split(',').map(n => parseInt(n.trim()));
+
+        if (parts.length !== 2) return false;
+
+        const [p, q] = parts;
+
+        if (isNaN(p) || isNaN(q)) return false;
+
+        if (p <= 1 || q <= 1) return false;
+
+        return true;
+      }
+
+      if (algo.keyMin === 0) return true;
+
+      if (!key || key.trim() === '') return false;
+
+      if (algo.id === 'caesar') {
+        const n = parseInt(key);
+        return !isNaN(n) && n >= 1 && n <= 25;
+      }
+
+      if (algo.id === 'substitution') {
+        const k = key.toUpperCase();
+        return k.length === 26 && new Set(k).size === 26 && /^[A-Z]+$/.test(k);
+      }
+
+      if (algo.id === 'hill') {
+        const nums = key.split(',');
+        return nums.length === 4 && nums.every(n => !isNaN(parseInt(n)));
+      }
+
+      return key.length >= algo.keyMin && key.length <= algo.keyMax;
+    }
+
+    // ===== ADD KEY VALIDATION ON INPUT =====
+    document.addEventListener('input', (e) => {
+      if (e.target.classList.contains('theme-input') && e.target.hasAttribute('data-algo')) {
+        const min = parseInt(e.target.getAttribute('data-min'));
+        const max = parseInt(e.target.getAttribute('data-max'));
+        if (min > 0) {
+          const len = e.target.value.length;
+          if (len < min) e.target.setCustomValidity(`Minimum ${min} characters required`);
+          else if (len > max) e.target.setCustomValidity(`Maximum ${max} characters allowed`);
+          else e.target.setCustomValidity('');
+        }
+      }
+    });
+
+    // ===== RESTRICT KEY INPUT LENGTH =====
+    document.addEventListener('keypress', (e) => {
+      if (e.target.classList.contains('theme-input') && e.target.hasAttribute('data-algo')) {
+        const max = parseInt(e.target.getAttribute('data-max'));
+        if (max > 0 && e.target.value.length >= max) {
+          e.preventDefault();
+          showToast(`Maximum ${max} characters allowed`, 'error');
+        }
+      }
+    });
+
+    // ===== RUN ENCRYPTION =====
+    function runEncryption() {
+      const text = document.getElementById('enc-input').value.trim();
+      if (!text) { showToast('Please enter a message', 'error'); return; }
+      const checked = [...document.querySelectorAll('#enc-algo-list input:checked')].map(i => i.value);
+      if (!checked.length) { showToast('Select at least one algorithm', 'error'); return; }
+      const results = [];
+      for (const algoId of checked) {
+        const algo = ALGORITHMS.find(a => a.id === algoId);
+        let key = '';
+
+        if (algoId === 'rsa') {
+          const p = document.getElementById('key-encrypt-rsa-p').value;
+          const q = document.getElementById('key-encrypt-rsa-q').value;
+          key = p + ',' + q;
+        }
+
+        else if (algoId === 'hill') {
+          const a = document.getElementById('key-encrypt-hill-a').value;
+          const b = document.getElementById('key-encrypt-hill-b').value;
+          const c = document.getElementById('key-encrypt-hill-c').value;
+          const d = document.getElementById('key-encrypt-hill-d').value;
+          key = `${a},${b},${c},${d}`;
+        }
+
+        else {
+          const keyEl = document.getElementById('key-encrypt-' + algoId);
+          key = keyEl ? keyEl.value.trim() : '';
+        }
+        if (algo.keyMin > 0 && !validateKey(algo, key)) { showToast(`Invalid key for ${algo.name}`, 'error'); return; }
+        try {
+          const cipher = encrypt(algoId, text, key);
+          results.push({ algo: algo.name, key: key || 'N/A', cipher, security: algo.security });
+        } catch (e) { showToast(`Error with ${algo.name}: ${e.message}`, 'error'); return; }
+      }
+      renderEncOutput(text, results);
+      saveHistory('Encryption', text, results);
+      showToast('Encryption complete!');
+      autofillDecryptKeys();
+    }
+
+    function autofillDecryptKeys() {
+
+      if (history.length === 0) return;
+
+      const last = history[0];
+
+      last.details.forEach(d => {
+
+        const algoId = ALGORITHMS.find(a => a.name === d.algo)?.id;
+
+        if (!algoId) return;
+
+        if (algoId === 'rsa') {
+
+          const [p, q] = d.key.split(',');
+
+          const pEl = document.getElementById('key-decrypt-rsa-p');
+          const qEl = document.getElementById('key-decrypt-rsa-q');
+
+          if (pEl && qEl) {
+            pEl.value = p;
+            qEl.value = q;
+          }
+
+        }
+
+        else if (algoId === 'hill') {
+
+          const vals = d.key.split(',');
+
+          ['a', 'b', 'c', 'd'].forEach((k, i) => {
+            const el = document.getElementById('key-decrypt-hill-' + k);
+            if (el) el.value = vals[i];
+          });
+
+        }
+
+        else {
+
+          const el = document.getElementById('key-decrypt-' + algoId);
+          if (el) el.value = d.key;
+
+        }
+
+      });
+
+    }
+
+    // ===== RUN DECRYPTION =====
+    function runDecryption() {
+      const cipher = document.getElementById('dec-input').value.trim();
+      if (!cipher) { showToast('Please enter ciphertext', 'error'); return; }
+      const sel = document.querySelector('#dec-algo-list input:checked');
+      if (!sel) { showToast('Select an algorithm', 'error'); return; }
+      const algoId = sel.value;
+      const algo = ALGORITHMS.find(a => a.id === algoId);
+      let key = '';
+
+      if (algoId === 'rsa') {
+        const p = document.getElementById('key-decrypt-rsa-p').value;
+        const q = document.getElementById('key-decrypt-rsa-q').value;
+        key = p + ',' + q;
+      }
+
+      else if (algoId === 'hill') {
+        const a = document.getElementById('key-decrypt-hill-a').value;
+        const b = document.getElementById('key-decrypt-hill-b').value;
+        const c = document.getElementById('key-decrypt-hill-c').value;
+        const d = document.getElementById('key-decrypt-hill-d').value;
+        key = `${a},${b},${c},${d}`;
+      }
+
+      else {
+        const keyEl = document.getElementById('key-decrypt-' + algoId);
+        key = keyEl ? keyEl.value.trim() : '';
+      }
+      if (algo.keyMin > 0 && !validateKey(algo, key)) { showToast(`Invalid key for ${algo.name}`, 'error'); return; }
+      try {
+        const plain = decrypt(algoId, cipher, key);
+        renderDecOutput(cipher, [{ algo: algo.name, key: key || 'N/A', plain, security: algo.security }]);
+        saveHistory('Decryption', cipher, [{ algo: algo.name, key: key || 'N/A', result: plain, security: algo.security }]);
+        showToast('Decryption complete!');
+      } catch (e) { showToast(`Error: ${e.message}`, 'error'); }
+    }
+
+    // ===== RUN BOTH =====
+    function runBoth() {
+      const text = document.getElementById('both-input').value.trim();
+      if (!text) { showToast('Please enter a message', 'error'); return; }
+      const checked = [...document.querySelectorAll('#both-algo-list input:checked')].map(i => i.value);
+      if (!checked.length) { showToast('Select at least one algorithm', 'error'); return; }
+      const results = [];
+      for (const algoId of checked) {
+        const algo = ALGORITHMS.find(a => a.id === algoId);
+        const keyEl = document.getElementById('key-both-' + algoId);
+        const key = keyEl ? keyEl.value.trim() : '';
+        if (algo.keyMin > 0 && !validateKey(algo, key)) { showToast(`Invalid key for ${algo.name}`, 'error'); return; }
+        try {
+          const cipher = encrypt(algoId, text, key);
+          let decrypted = 'N/A';
+          if (algo.canDecrypt) {
+            if (algoId === 'rsa') { try { decrypted = decrypt(algoId, cipher, cipher); } catch { decrypted = 'See RSA keys'; } }
+            else { decrypted = decrypt(algoId, cipher, key); }
+          } else if (algoId === 'sha1') { decrypted = 'One-way hash'; }
+          else if (algoId === 'dh') { decrypted = 'Key exchange only'; }
+          results.push({ algo: algo.name, key: key || 'N/A', cipher, decrypted, security: algo.security });
+        } catch (e) { showToast(`Error with ${algo.name}: ${e.message}`, 'error'); return; }
+      }
+      renderBothOutput(text, results);
+      saveHistory('Both', text, results);
+      showToast('Process complete!');
+    }
+
+    // ===== RENDER OUTPUTS =====
+    function renderEncOutput(plaintext, results) {
+      const container = document.getElementById('enc-output');
+      const secClass = s => s === 'Low' ? 'security-low' : s === 'Medium' ? 'security-medium' : 'security-high';
+      container.innerHTML = `
+    <div class="slide-up">
+      <div class="mb-3 p-3 rounded-lg" style="background:rgba(0,240,255,0.08);border:1px solid rgba(0,240,255,0.2)">
+        <span class="font-orbitron text-sm font-bold" style="color:var(--neon-primary)">Plaintext:</span>
+        <span class="font-mono ml-2">${escHtml(plaintext)}</span>
+      </div>
+      <div class="overflow-x-auto rounded-xl neon-border">
+        <table class="w-full text-sm">
+          <thead><tr>
+            <th class="p-3 font-orbitron text-left">S.No</th>
+            <th class="p-3 font-orbitron text-left">Algorithm</th>
+            <th class="p-3 font-orbitron text-left">Key</th>
+            <th class="p-3 font-orbitron text-left">Ciphertext</th>
+            <th class="p-3 font-orbitron text-left">Security</th>
+          </tr></thead>
+          <tbody>${results.map((r, i) => `<tr>
+            <td class="p-3">${i + 1}</td>
+            <td class="p-3 font-bold">${r.algo}</td>
+            <td class="p-3 font-mono text-xs break-all max-w-[150px]">${escHtml(r.key)}</td>
+            <td class="p-3 font-mono text-xs break-all max-w-[300px]">${escHtml(typeof r.cipher === 'string' ? r.cipher : JSON.stringify(r.cipher))}
+              <button onclick="copyText('${(typeof r.cipher === 'string' ? r.cipher : JSON.stringify(r.cipher)).replace(/'/g, '')}')" class="ml-2 text-xs btn-neon px-2 py-1 rounded">Copy</button>
+            </td>
+            <td class="p-3 font-bold ${secClass(r.security)}">${r.security}</td>
+          </tr>`).join('')}</tbody>
+        </table>
+      </div>
+    </div>`;
+    }
+
+    function renderDecOutput(cipher, results) {
+      const container = document.getElementById('dec-output');
+      const secClass = s => s === 'Low' ? 'security-low' : s === 'Medium' ? 'security-medium' : 'security-high';
+      container.innerHTML = `
+    <div class="slide-up">
+      <div class="mb-3 p-3 rounded-lg" style="background:rgba(255,0,229,0.08);border:1px solid rgba(255,0,229,0.2)">
+        <span class="font-orbitron text-sm font-bold" style="color:var(--neon-secondary)">Ciphertext:</span>
+        <span class="font-mono ml-2 break-all">${escHtml(cipher)}</span>
+      </div>
+      <div class="overflow-x-auto rounded-xl neon-border">
+        <table class="w-full text-sm">
+          <thead><tr>
+            <th class="p-3 font-orbitron text-left">S.No</th>
+            <th class="p-3 font-orbitron text-left">Algorithm</th>
+            <th class="p-3 font-orbitron text-left">Key</th>
+            <th class="p-3 font-orbitron text-left">Plaintext</th>
+            <th class="p-3 font-orbitron text-left">Security</th>
+          </tr></thead>
+          <tbody>${results.map((r, i) => `<tr>
+            <td class="p-3">${i + 1}</td>
+            <td class="p-3 font-bold">${r.algo}</td>
+            <td class="p-3 font-mono text-xs break-all max-w-[150px]">${escHtml(r.key)}</td>
+            <td class="p-3 font-mono text-xs break-all max-w-[300px]"> ${escHtml(r.plain)}
+              <button onclick="copyText('${(r.plain || '').replace(/'/g, '')}')" class="ml-2 text-xs btn-neon px-2 py-1 rounded">Copy</button>
+            </td>
+            <td class="p-3 font-bold ${secClass(r.security)}">${r.security}</td>
+          </tr>`).join('')}</tbody>
+        </table>
+      </div>
+    </div>`;
+    }
+
+    function renderBothOutput(plaintext, results) {
+      const container = document.getElementById('both-output');
+      const secClass = s => s === 'Low' ? 'security-low' : s === 'Medium' ? 'security-medium' : 'security-high';
+      container.innerHTML = `
+    <div class="slide-up">
+      <div class="mb-3 p-3 rounded-lg" style="background:rgba(57,255,20,0.08);border:1px solid rgba(57,255,20,0.2)">
+        <span class="font-orbitron text-sm font-bold" style="color:var(--neon-green)">Plaintext:</span>
+        <span class="font-mono ml-2">${escHtml(plaintext)}</span>
+      </div>
+      <div class="overflow-x-auto rounded-xl neon-border">
+        <table class="w-full text-sm">
+          <thead><tr>
+            <th class="p-3 font-orbitron text-left">S.No</th>
+            <th class="p-3 font-orbitron text-left">Algorithm</th>
+            <th class="p-3 font-orbitron text-left">Key</th>
+            <th class="p-3 font-orbitron text-left">Ciphertext</th>
+            <th class="p-3 font-orbitron text-left">Decrypted</th>
+            <th class="p-3 font-orbitron text-left">Security</th>
+          </tr></thead>
+          <tbody>${results.map((r, i) => `<tr>
+            <td class="p-3">${i + 1}</td>
+            <td class="p-3 font-bold">${r.algo}</td>
+            <td class="p-3 font-mono text-xs break-all max-w-[120px]">${escHtml(r.key)}</td>
+            <td class="p-3 font-mono text-xs break-all max-w-[300px]">${escHtml(typeof r.cipher === 'string' ? r.cipher : JSON.stringify(r.cipher))}
+              <button onclick="copyText('${(typeof r.cipher === 'string' ? r.cipher : JSON.stringify(r.cipher)).replace(/'/g, '')}')" class="ml-2 text-xs btn-neon px-2 py-1 rounded">Copy</button>
+            </td>
+            <td class="p-3 font-mono text-xs break-all max-w-[200px]">${escHtml(r.decrypted)}</td>
+            <td class="p-3 font-bold ${secClass(r.security)}">${r.security}</td>
+          </tr>`).join('')}</tbody>
+        </table>
+      </div>
+    </div>`;
+    }
+
+    function escHtml(s) { const d = document.createElement('div'); d.textContent = String(s); return d.innerHTML; }
+
+    // ===== HISTORY =====
+    function saveHistory(type, input, results) {
+      history.unshift({ type, input: input.substring(0, 50), results: results.length, timestamp: new Date().toISOString(), details: results });
+      if (history.length > 50) history = history.slice(0, 50);
+      localStorage.setItem('cryptoLabHistory', JSON.stringify(history));
+      renderHistoryPage();
+    }
+    function deleteHistoryItem(idx) {
+
+      history.splice(idx, 1);
+
+      localStorage.setItem('cryptoLabHistory', JSON.stringify(history));
+
+      renderHistoryPage();   // refresh history page
+
+      showToast('History item deleted');
+
+    }
+    function clearHistory() {
+
+      if (history.length === 0) return;
+
+      history = [];
+
+      localStorage.setItem('cryptoLabHistory', JSON.stringify(history));
+
+      renderHistoryPage();   // refresh history page
+
+      showToast('History cleared');
+
+    }
+
+    function renderHistoryPage() {
+
+      const list = document.getElementById("history-page-list");
+      const empty = document.getElementById("history-page-empty");
+
+      if (!history.length) {
+        list.innerHTML = "";
+        empty.classList.remove("hidden");
+        return;
+      }
+
+      empty.classList.add("hidden");
+
+      list.innerHTML = history.map((h, i) => {
+
+        const icon =
+          h.type === "Encryption" ? "lock" :
+            h.type === "Decryption" ? "unlock" : "repeat";
+
+        const color =
+          h.type === "Encryption" ? "var(--neon-primary)" :
+            h.type === "Decryption" ? "var(--neon-secondary)" :
+              "var(--neon-green)";
+
+        return `
+
+<div class="theme-card rounded-xl p-5 neon-border mb-4">
+
+    <div class="flex justify-between items-start">
+
+        <div class="flex gap-3 cursor-pointer flex-1" onclick="toggleHistoryDetails(${i})">
+
+            <i data-lucide="${icon}" class="w-5 h-5 mt-1" style="color:${color}"></i>
+
+            <div>
+
+                <div class="font-orbitron text-lg font-bold" style="color:${color}">
+                    ${h.type}
+                </div>
+
+                <div class="text-xs theme-muted font-mono">
+                    ${escHtml(h.input)}
+                </div>
+
+                <div class="text-xs theme-muted mt-1">
+                    ${h.results} algorithms • ${new Date(h.timestamp).toLocaleString()}
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="flex gap-2">
+
+            <button onclick="replayHistory(${i})" class="px-2 py-1 text-xs btn-neon rounded">
+                Replay
+            </button>
+
+            <button onclick="deleteHistoryItem(${i})" class="p-1 rounded hover:bg-red-500/20">
+
+                <i data-lucide="trash-2" class="w-4 h-4" style="color:var(--neon-red)">
+                </i>
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <div id="history-detail-${i}" class="hidden mt-4">
+
+        <div class="overflow-x-auto rounded-xl neon-border">
+
+            <table class="w-full text-sm">
+
+                <thead>
+
+                    ${h.type === "Encryption"
+            ? `<tr>
+                        <th class="p-3 font-orbitron text-left">S.No</th>
+                        <th class="p-3 font-orbitron text-left">Algorithm</th>
+                        <th class="p-3 font-orbitron text-left">Key</th>
+                        <th class="p-3 font-orbitron text-left">Ciphertext</th>
+                        <th class="p-3 font-orbitron text-left">Security</th>
+                    </tr>`
+
+            : h.type === "Decryption"
+
+              ? `<tr>
+                        <th class="p-3 font-orbitron text-left">S.No</th>
+                        <th class="p-3 font-orbitron text-left">Algorithm</th>
+                        <th class="p-3 font-orbitron text-left">Key</th>
+                        <th class="p-3 font-orbitron text-left">Plaintext</th>
+                        <th class="p-3 font-orbitron text-left">Security</th>
+                    </tr>`
+
+              : `<tr>
+                        <th class="p-3 font-orbitron text-left">S.No</th>
+                        <th class="p-3 font-orbitron text-left">Algorithm</th>
+                        <th class="p-3 font-orbitron text-left">Key</th>
+                        <th class="p-3 font-orbitron text-left">Ciphertext</th>
+                        <th class="p-3 font-orbitron text-left">Decrypted</th>
+                        <th class="p-3 font-orbitron text-left">Security</th>
+                    </tr>`
+          }
+
+                </thead>
+
+                <tbody>
+
+                    ${h.details.map((d, idx) => {
+
+            if (h.type === "Encryption") {
+              return `
+                    <tr>
+                        <td class="p-3">${idx + 1}</td>
+
+                        <td class="p-3 font-bold">${d.algo}</td>
+
+                        <td class="p-3 font-mono text-xs">
+                            ${escHtml(d.key)}
+                        </td>
+
+                        <td class="p-3 font-mono text-xs break-all">
+
+                            ${escHtml(d.cipher)}
+
+                            <button onclick="copyText('${(d.cipher || "").replace(/'/g, "")}')" class="ml-2 text-xs btn-neon px-2 py-1 rounded">
+                                Copy
+                            </button>
+
+                        </td>
+
+                        <td class="p-3 font-bold">
+                            ${d.security}
+                        </td>
+
+                    </tr>`;
+            }
+
+            if (h.type === "Decryption") {
+              const plain = d.plain || d.result || d.decrypted || "";
+
+              return `
+                    <tr>
+
+                        <td class="p-3">${idx + 1}</td>
+
+                        <td class="p-3 font-bold">
+                            ${d.algo}
+                        </td>
+
+                        <td class="p-3 font-mono text-xs">
+                            ${escHtml(d.key)}
+                        </td>
+
+                        <td class="p-3 font-mono text-xs break-all">
+
+                            ${escHtml(plain)}
+
+                            <button onclick="copyText('${plain.replace(/'/g, "")}')" class="ml-2 text-xs btn-neon px-2 py-1 rounded">
+                                Copy
+                            </button>
+
+                        </td>
+
+                        <td class="p-3 font-bold">
+                            ${d.security}
+                        </td>
+
+                    </tr>`;
+            }
+
+            const plain = d.decrypted || d.result || "";
+
+            return `
+                    <tr>
+
+                        <td class="p-3">${idx + 1}</td>
+
+                        <td class="p-3 font-bold">
+                            ${d.algo}
+                        </td>
+
+                        <td class="p-3 font-mono text-xs">
+                            ${escHtml(d.key)}
+                        </td>
+
+                        <td class="p-3 font-mono text-xs break-all">
+
+                            ${escHtml(d.cipher)}
+
+                            <button onclick="copyText('${(d.cipher || "").replace(/'/g, "")}')" class="ml-2 text-xs btn-neon px-2 py-1 rounded">
+                                Copy
+                            </button>
+
+                        </td>
+
+                        <td class="p-3 font-mono text-xs break-all">
+                            ${escHtml(plain)}
+                        </td>
+
+                        <td class="p-3 font-bold">
+                            ${d.security}
+                        </td>
+
+                    </tr>`;
+
+          }).join("")}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+`;
+
+      }).join("");
+
+      lucide.createIcons();
+
+    }
+    function toggleHistoryDetails(i) {
+
+      const el = document.getElementById('history-detail-' + i);
+
+      el.classList.toggle('hidden');
+
+    }
+    function copyText(text) {
+
+      navigator.clipboard.writeText(text);
+
+      showToast("Copied to clipboard");
+
+    }
+
+    function replayHistory(i) {
+
+      const item = history[i];
+
+      showDashboard();
+
+      if (item.type === "Encryption") {
+
+        setMode("encrypt");
+
+        document.getElementById("enc-input").value = item.input;
+
+        item.details.forEach(d => {
+
+          const algoId = ALGORITHMS.find(a => a.name === d.algo)?.id;
+
+          if (!algoId) return;
+
+          const checkbox = document.querySelector(`#enc-algo-list input[value="${algoId}"]`);
+
+          if (checkbox) {
+            checkbox.checked = true;
+          }
+
+          const keyField = document.getElementById(`key-encrypt-${algoId}`);
+
+          if (keyField) {
+            keyField.value = d.key;
+          }
+
+        });
+
+        updateKeyVisibility("enc-algo-list", "encrypt");
+
+      }
+
+      else if (item.type === "Decryption") {
+
+        setMode("decrypt");
+
+        document.getElementById("dec-input").value = item.input;
+
+        const d = item.details[0];
+
+        const algoId = ALGORITHMS.find(a => a.name === d.algo)?.id;
+
+        if (algoId) {
+
+          const radio = document.querySelector(`#dec-algo-list input[value="${algoId}"]`);
+
+          if (radio) radio.checked = true;
+
+          const keyField = document.getElementById(`key-decrypt-${algoId}`);
+
+          if (keyField) keyField.value = d.key;
+
+        }
+
+        updateKeyVisibility("dec-algo-list", "decrypt");
+
+      }
+
+      else {
+
+        setMode("both");
+
+        document.getElementById("both-input").value = item.input;
+
+        item.details.forEach(d => {
+
+          const algoId = ALGORITHMS.find(a => a.name === d.algo)?.id;
+
+          if (!algoId) return;
+
+          const checkbox = document.querySelector(`#both-algo-list input[value="${algoId}"]`);
+
+          if (checkbox) {
+            checkbox.checked = true;
+          }
+
+          const keyField = document.getElementById(`key-both-${algoId}`);
+
+          if (keyField) {
+            keyField.value = d.key;
+          }
+
+        });
+
+        updateKeyVisibility("both-algo-list", "both");
+
+      }
+
+      showToast("History loaded");
+
+    }
+
+    // ===== INIT =====
+    lucide.createIcons();
+    // Don't auto-select any mode - wait for user to click
+  </script>
+  <script>(function () { function c() { var b = a.contentDocument || a.contentWindow.document; if (b) { var d = b.createElement('script'); d.innerHTML = "window.__CF$cv$params={r:'9dc64f4f6260285b',t:'MTc3MzUyMzA5NS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);"; b.getElementsByTagName('head')[0].appendChild(d) } } if (document.body) { var a = document.createElement('iframe'); a.height = 1; a.width = 1; a.style.position = 'absolute'; a.style.top = 0; a.style.left = 0; a.style.border = 'none'; a.style.visibility = 'hidden'; document.body.appendChild(a); if ('loading' !== document.readyState) c(); else if (window.addEventListener) document.addEventListener('DOMContentLoaded', c); else { var e = document.onreadystatechange || function () { }; document.onreadystatechange = function (b) { e(b); 'loading' !== document.readyState && (document.onreadystatechange = e, c()) } } } })();</script>
+</body>
+
+</html>
